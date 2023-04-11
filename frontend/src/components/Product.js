@@ -14,7 +14,7 @@ const Product = ({ product }) => {
       {/* This will stop the website to refresh the page when accessing it */}
       {/* And creates sort of a `Single Page App` */}
       <Link to={`/product/${product._id}`}>
-        <Card.Img variant='top' src={product.image} />
+        <Card.Img className='home-prod' variant='top' src={product.image} />
       </Link>
 
       <Card.Body>
