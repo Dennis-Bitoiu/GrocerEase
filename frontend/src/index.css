@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Racing+Sans+One&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* NAV */
+
+.brand {
+  font-family: 'Racing Sans One', cursive;
+  font-size: 2.5rem;
+}
+
+main {
+  min-height: 80vh;
+  padding: 3rem 0;
+}
+
+.card {
+  height: 100%;
+  font-size: 1rem;
+}
+
+.card-body {
+  margin-top: 5px;
+  padding: 0;
+}
+
+.price {
+  color: red;
+  font-size: 1rem;
+}
+
+.column {
+  height: 11rem;
+  width: 11rem;
+}
+
+img {
+  width: 134px;
+  height: 89px;
+}
