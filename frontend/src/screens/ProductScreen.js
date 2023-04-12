@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import QuantityBtn from "../components/QuantityBtn";
 
@@ -14,6 +14,11 @@ import {
 import products from "../products";
 
 const ProductScreen = () => {
+  const [added, setAdded] = useState(false);
+
+  function addedToCart() {
+    setAdded(true);
+  }
   // Used useParams() hook to return and object with all the parameters to this route (which is '/route/:id')
   const paramsObject = useParams();
 
@@ -58,13 +63,21 @@ const ProductScreen = () => {
               <strong>{product.countInStock}</strong> left in stock{" "}
             </ListGroupItem>
           </ListGroup>
-          <Button variant="primary" type="button" className="py-2">
-            <i class="fa-solid fa-cart-shopping me-3"></i>
-            Add to Cart
-          </Button>
+          {added === false ? (
+            <Button
+              variant="primary"
+              type="button"
+              className="py-2"
+              onClick={addedToCart}
+            >
+              <i className="fa-solid fa-cart-shopping me-3"></i>
+              Add to Cart
+            </Button>
+          ) : (
+            <QuantityBtn maxQuantity={product.countInStock} />
+          )}
         </Col>
       </Row>
-      <QuantityBtn />
     </>
   );
 };

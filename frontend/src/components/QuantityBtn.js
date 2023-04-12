@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 
-function QuantityBtn() {
+function QuantityBtn(props) {
+  const maxQuantity = props.maxQuantity;
+  console.log(maxQuantity);
   const [quantity, setQuantity] = useState(1);
 
   function increaseCount() {
@@ -21,11 +23,17 @@ function QuantityBtn() {
         onClick={decreaseCount}
         disabled={quantity === 0 ? true : false}
       >
-        <i class="fa-solid fa-minus"></i>
+        <i className="fa-solid fa-minus"></i>
       </Button>
       <div className="quantity-div">{quantity === 0 ? 0 : quantity}</div>
-      <Button variant="primary" size="sm" type="button" onClick={increaseCount}>
-        <i class="fa-solid fa-plus"></i>
+      <Button
+        variant="primary"
+        size="sm"
+        type="button"
+        onClick={increaseCount}
+        disabled={quantity === maxQuantity ? true : false}
+      >
+        <i className="fa-solid fa-plus"></i>
       </Button>
     </div>
   );
