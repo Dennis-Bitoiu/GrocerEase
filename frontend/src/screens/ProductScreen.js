@@ -18,7 +18,7 @@ const ProductScreen = () => {
 
   // This will find the product which id's matches the one passed
   // To the route parameter of the ProductScreen Route (/product/:id)
-  const product = products.find(prod => prod._id == paramsObject.id);
+  const product = products.find(prod => prod._id === paramsObject.id);
 
   return (
     <>
