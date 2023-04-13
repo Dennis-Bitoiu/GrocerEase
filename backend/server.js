@@ -1,7 +1,11 @@
-const express = require('express');
-const dotenv = require('dotenv');
-const cors = require('cors');
-const products = require('./data/products');
+// Added "type": "module" to package.json
+// In order to use ES6 Modules
+// IMPORTANT: When importing files, they need to end in .extension (.js)
+// This also allows to export files using ES6 modules: export default <name>
+import express from 'express';
+import dotenv from 'dotenv';
+import cors from 'cors';
+import products from './data/products.js';
 
 dotenv.config();
 
