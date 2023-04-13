@@ -7,6 +7,9 @@ import ProductScreen from './screens/ProductScreen';
 
 const App = () => {
   return (
+    // Define routes to each page
+    // '/' - renders the home page
+    // '/product/:id' - renders the page of the product with the id of :id
     <Router>
       <Header />
       <main>
