@@ -1,6 +1,5 @@
 const products = [
   {
-    _id: 1,
     name: 'Fresh Yellow Onions',
     image: '/images/onions.jpg',
     description:
@@ -11,7 +10,6 @@ const products = [
   },
 
   {
-    _id: 2,
     name: 'Baked Bread',
     image: '/images/bread.jpg',
     description:
@@ -22,7 +20,6 @@ const products = [
   },
 
   {
-    _id: 3,
     name: "Lay's Chips",
     image: '/images/chips.jpg',
     description:
@@ -33,7 +30,6 @@ const products = [
   },
 
   {
-    _id: 4,
     name: 'Green Cucumber',
     image: '/images/cucumber.jpg',
     description:
@@ -44,7 +40,6 @@ const products = [
   },
 
   {
-    _id: 5,
     name: 'Panini Sandwich',
     image: '/images/panini.jpg',
     description:
@@ -55,7 +50,6 @@ const products = [
   },
 
   {
-    _id: 6,
     name: 'Vine Tomatoes',
     image: '/images/tomatoes.jpg',
     description:
