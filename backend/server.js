@@ -8,6 +8,7 @@ import cors from 'cors';
 import colors from 'colors';
 import connectDB from './config/db.js';
 import productRoutes from './routes/productRoutes.js';
+import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
 dotenv.config();
 
@@ -23,6 +24,15 @@ app.get('/', (req, res) => {
 
 // Any incoming HTTP requests with the route prefix /api/products will be handled by the productRoutes middleware function
 app.use('/api/products', productRoutes);
+
+// ERROR HANDLER MIDDLEWARES
+
+// notFound will throw an error that will be caught and managed by errorHandler
+app.use(notFound);
+
+// If notFound happens or any of the routes throw an error,
+// errorHandler will take care of this rendering an appropriate message
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 const MODE = process.env.NODE_ENV;

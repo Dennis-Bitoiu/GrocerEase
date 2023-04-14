@@ -33,7 +33,10 @@ router.get(
     if (product) {
       res.send(product);
     } else {
-      res.status(404).json({ message: 'Product not found' });
+      // If something happened. set the sstatus of the response to 404 and throw an error
+      // Which will be caught by the errorHandler handler
+      res.status(404);
+      throw new Error('Product not found');
     }
   })
 );
