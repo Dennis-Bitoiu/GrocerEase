@@ -7,7 +7,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import colors from 'colors';
 import connectDB from './config/db.js';
-import products from './data/products.js';
+import productRoutes from './routes/productRoutes.js';
 
 dotenv.config();
 
@@ -21,20 +21,8 @@ app.get('/', (req, res) => {
   res.send('API is running');
 });
 
-// Get all products route
-app.get('/api/products', (req, res) => {
-  res.json(products);
-});
-
-// Get single product by id
-app.get('/api/products/:id', (req, res) => {
-  const { id } = req.params;
-
-  // Find object with the same 'id' key as the endpoint parameter
-  const product = products.find(prod => prod._id == id);
-
-  res.send(product);
-});
+// Any incoming HTTP requests with the route prefix /api/products will be handled by the productRoutes middleware function
+app.use('/api/products', productRoutes);
 
 const PORT = process.env.PORT || 5000;
 const MODE = process.env.NODE_ENV;
