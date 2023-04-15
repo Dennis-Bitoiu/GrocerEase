@@ -1,40 +1,48 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
 import Product from '../components/Product';
-import axios from 'axios';
+import { fetchProducts } from '../actions/productsActions';
+import Loader from '../components/Loader';
 
 const HomeScreen = () => {
-  const [products, setProducts] = useState([]);
+  // Initializes the dispatch constant using the useDispatch hook from Redux.
+  const dispatch = useDispatch();
 
-  // Fetch data using Axios from API once the component load
-  // Use promise API to change the state of products once the data came back from the backend
-  // If the promise was resolved, update the state of products
-  // Otherwise catch and log the error for debug
-  // To bypass the CORS error, install the `cors` dependency
+  // Dispatches the fetchProducts action when the component mounts.
+  // The "dispatch" function is added as a dependency to the dependency array
+  // To prevent the "useEffect" hook from causing an infinite loop.
+  // Get products from the reducer and store them into the 'productsList' state
   useEffect(() => {
-    axios
-      .get('http://localhost:5000/api/products')
-      .then(res => setProducts(res.data))
-      .catch(err => console.log(err));
-  }, []);
+    dispatch(fetchProducts());
+  }, [dispatch]);
+
+  const producstList = useSelector(state => state.productsList);
+  const { products, loading, error } = producstList;
 
   return (
     <>
       <h1>Latest products</h1>
-      <Row>
-        {products.map(product => (
-          <Col
-            key={product._id}
-            className='column'
-            sm={12}
-            md={6}
-            lg={4}
-            xl={3}
-          >
-            <Product product={product} />
-          </Col>
-        ))}
-      </Row>
+      {loading ? (
+        <Loader />
+      ) : error ? (
+        <h5>{error}</h5>
+      ) : (
+        <Row>
+          {products.map(product => (
+            <Col
+              key={product._id}
+              className='column'
+              sm={12}
+              md={6}
+              lg={4}
+              xl={3}
+            >
+              <Product product={product} />
+            </Col>
+          ))}
+        </Row>
+      )}
     </>
   );
 };
