@@ -4,6 +4,7 @@ import { Row, Col } from 'react-bootstrap';
 import Product from '../components/Product';
 import { fetchProducts } from '../actions/productsActions';
 import Loader from '../components/Loader';
+import Categories from '../components/Categories';
 
 const HomeScreen = () => {
   // Initializes the dispatch constant using the useDispatch hook from Redux.
@@ -22,6 +23,7 @@ const HomeScreen = () => {
 
   return (
     <>
+    <Categories></Categories>
       <h1>Latest products</h1>
       {loading ? (
         <Loader />

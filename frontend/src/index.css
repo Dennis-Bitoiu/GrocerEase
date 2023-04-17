@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Racing+Sans+One&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Racing+Sans+One&display=swap");
 
 * {
   margin: 0;
@@ -6,12 +6,10 @@
   box-sizing: border-box;
 }
 
-
-
 /* NAV */
 
 .brand {
-  font-family: 'Racing Sans One', cursive;
+  font-family: "Racing Sans One", cursive;
   font-size: 2.5rem;
 }
 
@@ -31,6 +29,27 @@ main {
   padding: 0;
 }
 
+/* CATEGORY CAROUSEL STYLING */
+.carousel-item-next {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 0 9rem;
+}
+.carousel-item-prev {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 0 9rem;
+}
+
+.carousel-card {
+  background-color: transparent;
+  color: black;
+  width: 6rem;
+  height: 9rem;
+  display: inline-block;
+}
+
+/* PRODUCT CARD STYLING */
 .price {
   font-size: 1rem;
 }
@@ -49,19 +68,24 @@ main {
   width: 80%;
   /* border: 1px solid hsl(160, 51%, 49%);
   border-radius: 10%; */
-  box-shadow: 2px 2px 10px hsla(0, 0%, 0%, .15)
-
+  box-shadow: 2px 2px 10px hsla(0, 0%, 0%, 0.15);
 }
 
 /* Quantity div for products */
-.quantity-div{
-  font-size: 1.3rem; 
+.quantity-div {
+  font-size: 1.3rem;
   display: inline-block;
   padding: 0 1rem 0;
 }
 
 .quantity-component {
   display: flex;
-  
+
   align-items: center;
+}
+
+.carousel-item.active {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 0 9rem;
 }
