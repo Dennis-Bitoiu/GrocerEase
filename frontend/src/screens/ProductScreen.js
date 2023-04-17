@@ -11,6 +11,7 @@ import {
   ListGroup,
   ListGroupItem,
 } from 'react-bootstrap';
+import ErrorMessage from '../components/ErrorMessage';
 
 const ProductScreen = () => {
   // Use state for the cart button to render a different component depending on the state of 'added'
@@ -33,12 +34,12 @@ const ProductScreen = () => {
     axios
       .get(`http://localhost:5000/api/products/${paramsObject.id}`)
       .then(res => setProduct(res.data))
-      .catch(err => console.log(err));
+      .catch(res => setProduct(null));
   }, [paramsObject.id]);
 
   return (
     <>
-      <Link className='btn btn-primary my-3' to='/'>
+    {!product ? <ErrorMessage/>: <div><Link className='btn btn-primary my-3' to='/'>
         Go Back
       </Link>
 
@@ -87,7 +88,8 @@ const ProductScreen = () => {
             <QuantityBtn maxQuantity={product.countInStock} />
           )}
         </Col>
-      </Row>
+      </Row></div>}
+      
     </>
   );
 };

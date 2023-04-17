@@ -29,12 +29,12 @@ router.get(
 
     // Find object with the same 'id' key as the endpoint parameter
     const product = await Product.findById(id);
-
     if (product) {
       res.send(product);
     } else {
       // If something happened. set the sstatus of the response to 404 and throw an error
       // Which will be caught by the errorHandler handler
+      console.log('Not Valid')
       res.status(404);
       throw new Error('Product not found');
     }
