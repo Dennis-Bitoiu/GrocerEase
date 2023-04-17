@@ -2,11 +2,13 @@
 // import thunk from 'redux-thunk';
 // import { composeWithDevTools } from 'redux-devtools-extension';
 import { configureStore } from '@reduxjs/toolkit';
-import productReducer from './slices/productSlice';
+import productsReducer from './slices/productSlice';
+import { productSlice } from './slices/productSlice';
 
 const store = configureStore({
   reducer: {
-    productsList: productReducer,
+    productsList: productsReducer,
+    product: productSlice.reducer,
   },
 });
 

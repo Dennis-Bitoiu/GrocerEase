@@ -11,6 +11,12 @@ import {
   productListFail,
 } from '../slices/productSlice';
 
+import {
+  productRequest,
+  productSuccess,
+  productFail,
+} from '../slices/productSlice';
+
 export const fetchProducts = () => async dispatch => {
   dispatch(productListRequest());
   try {
@@ -21,6 +27,23 @@ export const fetchProducts = () => async dispatch => {
     const customMessage = error.response.data.message;
     dispatch(
       productListFail(
+        error.response && customMessage ? customMessage : error.message
+      )
+    );
+  }
+};
+
+export const fetchProduct = id => async dispatch => {
+  dispatch(productRequest());
+  try {
+    const response = await axios.get(
+      `http://localhost:5000/api/products/${id}`
+    );
+    dispatch(productSuccess(response.data));
+  } catch (error) {
+    const customMessage = error.response.data.message;
+    dispatch(
+      productFail(
         error.response && customMessage ? customMessage : error.message
       )
     );
