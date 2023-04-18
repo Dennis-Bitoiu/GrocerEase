@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { addToCartAction } from '../actions/cartActions';
 
 function QuantityBtn(props) {
   const maxQuantity = props.maxQuantity;
@@ -14,6 +16,13 @@ function QuantityBtn(props) {
     setQuantity(quantity - 1);
   }
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (props.toggled) {
+      dispatch(addToCartAction(props.id, quantity));
+    }
+  }, [quantity]);
   return (
     <div className='quantity-component'>
       <Button
