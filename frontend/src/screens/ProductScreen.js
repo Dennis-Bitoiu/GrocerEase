@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import QuantityBtn from '../components/QuantityBtn';
 import { useDispatch, useSelector } from 'react-redux';
+import QuantityBtn from '../components/QuantityBtn';
 import { fetchProduct } from '../actions/productsActions';
-import ErrorMessage from '../components/ErrorMessage';
+import Message from '../components/Message';
 import Loader from '../components/Loader';
+import { addToCartAction } from '../actions/cartActions';
 
 import {
   Row,
@@ -19,11 +20,9 @@ const ProductScreen = () => {
   // Use state for the cart button to render a different component depending on the state of 'added'
   const [added, setAdded] = useState(false);
 
-  // const [product, setProduct] = useState({});
-
   const dispatch = useDispatch();
 
-  function addedToCart() {
+  function addToCartHandler() {
     setAdded(true);
   }
 
@@ -41,6 +40,14 @@ const ProductScreen = () => {
   const productDetails = useSelector(state => state.product);
 
   const { product, loading, error } = productDetails;
+
+  // Trigger this effect when the user clicks on the 'Add to cart' button
+  useEffect(() => {
+    if (added) {
+      dispatch(addToCartAction(paramsObject.id, 1));
+    }
+  }, [added, dispatch, paramsObject.id]);
+
   return (
     <>
       {loading ? (
@@ -87,19 +94,23 @@ const ProductScreen = () => {
                   variant='primary'
                   type='button'
                   className='py-2'
-                  onClick={addedToCart}
+                  onClick={addToCartHandler}
                 >
                   <i className='fa-solid fa-cart-shopping me-3'></i>
                   Add to Cart
                 </Button>
               ) : (
-                <QuantityBtn maxQuantity={product.countInStock} />
+                <QuantityBtn
+                  maxQuantity={product.countInStock}
+                  id={product._id}
+                  toggled={added}
+                />
               )}
             </Col>
           </Row>
         </div>
       ) : (
-        <ErrorMessage />
+        <Message variant='danger'>Product not Found</Message>
       )}
     </>
   );
