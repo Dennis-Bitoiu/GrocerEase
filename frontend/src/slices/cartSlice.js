@@ -8,6 +8,8 @@ const cartSlice = createSlice({
       const item = action.payload;
 
       const existItem = state.cartItems.find(x => x.id === item.id);
+
+      //   If Item exist, return a new array where only the item with the same ID as `item` gets updated
       if (existItem) {
         state.cartItems = state.cartItems.map(x =>
           x.id === existItem.id ? item : x
