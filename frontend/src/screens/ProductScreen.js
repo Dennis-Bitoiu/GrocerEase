@@ -36,7 +36,7 @@ const ProductScreen = () => {
   // Destructuring can be used to replace res with { data }, however we preffer doing it this way
   useEffect(() => {
     dispatch(fetchProduct(paramsObject.id));
-  }, [dispatch]);
+  }, [dispatch, paramsObject]);
 
   const productDetails = useSelector(state => state.product);
 
