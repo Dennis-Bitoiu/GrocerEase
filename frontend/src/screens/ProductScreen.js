@@ -81,7 +81,7 @@ const ProductScreen = () => {
       setQuantity(1);
       dispatch(addToCartAction(paramsObject.id, quantity));
     }
-  }, [added, dispatch, paramsObject.id]);
+  }, [added, dispatch, paramsObject.id, productIsStored, quantity]);
 
   return (
     <>
