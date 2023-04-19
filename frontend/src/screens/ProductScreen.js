@@ -43,8 +43,6 @@ const ProductScreen = () => {
   const productDetails = useSelector(state => state.product);
   const { product, loading, error } = productDetails;
 
-  // let quantity = 1;
-
   // Retrieve cartState from Redux
   const cartState = useSelector(state => state.cart);
   const { cartItems } = cartState;
@@ -80,14 +78,6 @@ const ProductScreen = () => {
   // 'stored' was set to true on the render of the page
   useEffect(() => {
     if (added && !productIsStored) {
-      // const storedValue = localStorage.getItem('cartItems')
-      //   ? JSON.parse(localStorage.getItem('cartItems'))
-      //   : [];
-
-      // const storedProduct = storedValue.find(
-      //   stored => stored.id === paramsObject.id
-      // );
-
       setQuantity(1);
       dispatch(addToCartAction(paramsObject.id, quantity));
     }
