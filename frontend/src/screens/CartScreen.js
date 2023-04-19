@@ -57,6 +57,7 @@ function CartScreen() {
                         id={item.id}
                         toggled={true}
                         maxQuantity={item.countInStock}
+                        quantity={item.qty}
                       ></QuantityBtn>
                     </Col>
                   </Row>
