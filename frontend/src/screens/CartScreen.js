@@ -6,14 +6,12 @@ import {
   Col,
   ListGroup,
   Image,
-  Form,
   Button,
   Card,
   ListGroupItem,
 } from 'react-bootstrap';
 import Message from '../components/Message';
 import QuantityBtn from '../components/QuantityBtn';
-import { current } from '@reduxjs/toolkit';
 
 function CartScreen() {
   const cart = useSelector(state => state.cart);
