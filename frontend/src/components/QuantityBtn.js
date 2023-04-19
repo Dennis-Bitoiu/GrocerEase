@@ -6,7 +6,9 @@ import { addToCartAction } from '../actions/cartActions';
 function QuantityBtn(props) {
   const maxQuantity = props.maxQuantity;
   // console.log(maxQuantity);
-  const [quantity, setQuantity] = useState(1);
+
+  const [quantity, setQuantity] = useState(props.quantity);
+  console.log(quantity);
 
   function increaseCount() {
     setQuantity(quantity + 1);
@@ -22,7 +24,7 @@ function QuantityBtn(props) {
     if (props.toggled) {
       dispatch(addToCartAction(props.id, quantity));
     }
-  }, [quantity]);
+  }, [quantity, dispatch, props.id, props.toggled]);
   return (
     <div className='quantity-component'>
       <Button
@@ -34,7 +36,7 @@ function QuantityBtn(props) {
       >
         <i className='fa-solid fa-minus'></i>
       </Button>
-      <div className='quantity-div'>{quantity === 0 ? 0 : quantity}</div>
+      <div className='quantity-div'>{quantity}</div>
       <Button
         variant='primary'
         size='sm'
