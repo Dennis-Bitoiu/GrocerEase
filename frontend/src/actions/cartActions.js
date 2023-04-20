@@ -1,4 +1,4 @@
-import { addItem } from '../slices/cartSlice';
+import { addItem, removeItem } from '../slices/cartSlice';
 import axios from 'axios';
 
 export const addToCartAction = (id, qty) => async (dispatch, getState) => {
@@ -21,5 +21,11 @@ export const addToCartAction = (id, qty) => async (dispatch, getState) => {
   // This will ensure that the items in the cart persist across page reloads and browser sessions.
   // The 'cartItems' key is used to store the serialized version of the cartItems array from the Redux store.
   // The JSON.stringify method is used to convert the array to a JSON string, which can be stored as a value in localStorage.
+  localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
+};
+
+export const removeFromCart = id => async (dispatch, getState) => {
+  dispatch(removeItem({ id: id }));
+
   localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
 };

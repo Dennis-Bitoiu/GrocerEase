@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Row,
@@ -12,13 +12,21 @@ import {
 } from 'react-bootstrap';
 import Message from '../components/Message';
 import QuantityBtn from '../components/QuantityBtn';
+import { removeFromCart } from '../actions/cartActions';
 
 function CartScreen() {
   const cart = useSelector(state => state.cart);
   const { cartItems } = cart;
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  function removeFromCartHandler(id) {
+    dispatch(removeFromCart(id));
+  }
+
   function checkOutHandler() {
-    console.log('checkout');
+    navigate('/login?redirect=shipping');
   }
 
   return (
@@ -57,6 +65,15 @@ function CartScreen() {
                         maxQuantity={item.countInStock}
                         quantity={item.qty}
                       ></QuantityBtn>
+                    </Col>
+                    <Col md={2}>
+                      <Button
+                        type='button'
+                        variant='light'
+                        onClick={() => removeFromCartHandler(item.id)}
+                      >
+                        <i className='fa-solid fa-trash'></i>
+                      </Button>
                     </Col>
                   </Row>
                 </ListGroupItem>

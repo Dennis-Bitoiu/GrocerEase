@@ -126,20 +126,7 @@ input[type="password"] {
   text-indent: 2rem;
 }
 
-button {
-  background-color: #04aa6d;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 35% auto 35%;
-  border: none;
-  cursor: pointer;
-  width: 30%;
-  border-radius: 30px;
-}
 
-button:hover {
-  opacity: 0.8;
-}
 
 .loginContainer {
   padding: 16px;

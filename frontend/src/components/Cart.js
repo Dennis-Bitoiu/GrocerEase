@@ -16,7 +16,7 @@ function Cart() {
     >
       <Row className='header-cart'>
         <Col md={5}>
-          <i class='fa-solid fa-basket-shopping fa-lg'></i>
+          <i className='fa-solid fa-basket-shopping fa-lg'></i>
         </Col>
         <Col md={7} style={{ fontSize: '1.1rem' }}>
           <div>
