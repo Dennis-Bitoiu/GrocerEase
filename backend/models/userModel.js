@@ -37,6 +37,19 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
+// This middleware function is called before saving a user to the database.
+//  Its purpose is to hash the user's password for security purposes.
+//  If the password has not been modified, the function skips this step.
+//  If the password has been modified, the function generates a salt using bcrypt.genSalt()
+//  And hashes the password using bcrypt.hash().
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) {
+    next();
+  }
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+});
+
 const User = mongoose.model('User', userSchema);
 
 export default User;
