@@ -30,4 +30,62 @@ const authUser = AsyncHandler(async (req, res) => {
   }
 });
 
-export { authUser };
+// @description: Get user profile
+// @route: POST /api/users/profile
+// @access: Private (only a logged in user can access it)
+const getUserProfile = AsyncHandler(async (req, res) => {
+  // req.user property was set in the authMiddleware.js
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    });
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+});
+
+// @description: Register a new user
+// @route: POST /api/users
+// @access: Public (Anyone can access it)
+const registerUser = AsyncHandler(async (req, res) => {
+  const { name, email, password } = req.body;
+
+  // Check if an user with this email exists
+  // Instead of using email: email, we can use destructurin and pass just email as parameter
+  const userExist = await User.findOne({ email });
+
+  if (userExist) {
+    res.status(400);
+    throw new Error('User already exists');
+  }
+
+  // User.create() is being used instead of user.save() in order to
+  // Store a new user entry in the database
+  // A middleware inside userModel.js is used to hash the password before the document is saved in the DB
+  const user = await User.create({
+    name,
+    email,
+    password,
+  });
+
+  if (user) {
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      token: generateToken(user._id),
+    });
+  } else {
+    res.status(400);
+    throw new Error('Invalid user data');
+  }
+});
+
+export { authUser, getUserProfile, registerUser };
