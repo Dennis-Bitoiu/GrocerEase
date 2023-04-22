@@ -1,17 +1,17 @@
 import axios from 'axios';
 import { userLoginRequest, userLoginSucces, userLoginFail } from '../slices/userSlice';
 
-export const login = (email, password) => async dispacth => {
+export const login = (email, password) => async dispatch => {
   try {
-    dispacth(userLoginRequest());
+    dispatch(userLoginRequest());
     const config = {
       headers: {
         'Content-Type': 'application/json',
       },
     };
 
-    const { data } = axios.post('http://localhost:5000/api/users/login', { email, password }, config);
-    dispacth(userLoginSucces(data));
+    const { data } = await axios.post('http://localhost:5000/api/users/login', { email, password }, config);
+    dispatch(userLoginSucces(data));
 
     localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
