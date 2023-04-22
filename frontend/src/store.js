@@ -30,7 +30,7 @@ const store = configureStore({
     productsList: productsReducer,
     product: productSlice.reducer,
     cart: cartSliceReducer,
-    user: userSliceReducer,
+    userLogin: userSliceReducer,
   },
   preloadedState: initialState,
 });
