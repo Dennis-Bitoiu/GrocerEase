@@ -1,11 +1,11 @@
-import Header from "./components/Header";
-import { Container } from "react-bootstrap";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Footer from "./components/Footer";
-import HomeScreen from "./screens/HomeScreen";
-import ProductScreen from "./screens/ProductScreen";
-import CartScreen from "./screens/CartScreen";
-import Login from "./screens/Login";
+import Header from './components/Header';
+import { Container } from 'react-bootstrap';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Footer from './components/Footer';
+import HomeScreen from './screens/HomeScreen';
+import ProductScreen from './screens/ProductScreen';
+import CartScreen from './screens/CartScreen';
+import LoginScreen from './screens/LoginScreen';
 
 const App = () => {
   return (
@@ -17,10 +17,10 @@ const App = () => {
       <main>
         <Container>
           <Routes>
-            <Route exact path="/" element={<HomeScreen />} />
-            <Route path="/product/:id" element={<ProductScreen />} />
-            <Route path="/cart" element={<CartScreen />} />
-            <Route path="/login" element={<Login />} />
+            <Route exact path='/' element={<HomeScreen />} />
+            <Route path='/product/:id' element={<ProductScreen />} />
+            <Route path='/cart' element={<CartScreen />} />
+            <Route path='/login' element={<LoginScreen />} />
           </Routes>
         </Container>
       </main>
