@@ -39,9 +39,64 @@ const userRegisterReducer = createSlice({
   },
 });
 
-export const { userLoginRequest, userLoginSucces, userLoginFail, userLogout } = userSlice.actions;
+const userDetailsReducer = createSlice({
+  name: 'userRegister',
+  initialState: { user: {}, loading: false, error: null },
+  reducers: {
+    userDetailsRequest: state => {
+      state = { ...state };
+      state.loading = true;
+    },
+    userDetailsSucces: (state, action) => {
+      state.user = action.payload;
+      state.loading = false;
+    },
+    userDetailsFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+  },
+});
 
-export const { userRegisterRequest, userRegisterSucces, userRegisterFail } = userRegisterReducer.actions;
+const userUpdateProfileReducer = createSlice({
+  name: 'userUpdateProfile',
+  initialState: { userInfo: {}, loading: false, error: null, success: false },
+  reducers: {
+    userUpdateProfileRequest: state => {
+      state = { ...state };
+      state.loading = true;
+    },
+    userUpdateProfileSucces: (state, action) => {
+      state.userInfo = action.payload;
+      state.loading = false;
+      state.success = true;
+    },
+    userUpdateProfileFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    userUpdateProfileReset: (state, action) => {
+      state.loading = false;
+    },
+  },
+});
+
+export const { userLoginRequest, userLoginSucces, userLoginFail, userLogout } =
+  userSlice.actions;
+export default userSlice.reducer;
+
+export const { userRegisterRequest, userRegisterSucces, userRegisterFail } =
+  userRegisterReducer.actions;
 export { userRegisterReducer };
 
-export default userSlice.reducer;
+export const { userDetailsRequest, userDetailsSucces, userDetailsFail } =
+  userDetailsReducer.actions;
+export { userDetailsReducer };
+
+export const {
+  userUpdateProfileRequest,
+  userUpdateProfileSucces,
+  userUpdateProfileFail,
+  userUpdateProfileReset,
+} = userUpdateProfileReducer.actions;
+export { userUpdateProfileReducer };
