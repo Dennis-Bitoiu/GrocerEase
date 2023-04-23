@@ -57,7 +57,7 @@ const registerUser = AsyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
   // Check if an user with this email exists
-  // Instead of using email: email, we can use destructurin and pass just email as parameter
+  // Instead of using email: email, use destructuring and pass just email as parameter
   const userExist = await User.findOne({ email });
 
   if (userExist) {
