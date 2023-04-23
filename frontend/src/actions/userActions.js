@@ -7,6 +7,12 @@ import {
   userRegisterRequest,
   userRegisterSucces,
   userRegisterFail,
+  userDetailsRequest,
+  userDetailsSucces,
+  userDetailsFail,
+  userUpdateProfileRequest,
+  userUpdateProfileSucces,
+  userUpdateProfileFail,
 } from '../slices/userSlice';
 
 export const login = (email, password) => async dispatch => {
@@ -56,5 +62,57 @@ export const register = (name, email, password) => async dispatch => {
   } catch (error) {
     const customMessage = error.response.data.message;
     dispatch(userRegisterFail(error.response && customMessage ? customMessage : error.message));
+  }
+};
+
+export const getUserDetails = id => async (dispatch, getState) => {
+  try {
+    dispatch(userDetailsRequest());
+
+    // Retrieve the userInfo object from the 'userLogin' state
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        // Pass token through the authorization header
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(`http://localhost:5000/api/users/${id}`, config);
+
+    dispatch(userDetailsSucces(data));
+  } catch (error) {
+    const customMessage = error.response.data.message;
+    dispatch(userDetailsFail(error.response && customMessage ? customMessage : error.message));
+  }
+};
+
+export const updateUserProfile = user => async (dispatch, getState) => {
+  try {
+    dispatch(userUpdateProfileRequest());
+
+    // Retrieve the userInfo object from the 'userLogin' state
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        // Pass token through the authorization header
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(`http://localhost:5000/api/users/profile`, user, config);
+
+    dispatch(userUpdateProfileSucces(data));
+  } catch (error) {
+    const customMessage = error.response.data.message;
+    dispatch(userUpdateProfileFail(error.response && customMessage ? customMessage : error.message));
   }
 };
