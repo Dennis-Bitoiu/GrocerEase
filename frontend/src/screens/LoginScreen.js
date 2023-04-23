@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
@@ -7,7 +7,7 @@ import Loader from '../components/Loader';
 import FormContainer from '../components/FormContainer';
 import { login } from '../actions/userActions';
 
-function LoginScreen({ location }) {
+function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -15,9 +15,12 @@ function LoginScreen({ location }) {
   // Retrieve the user reducer and destructure the loading, error and userInfo
   const dispatch = useDispatch();
   const userLogin = useSelector(state => state.userLogin);
+
   const { loading, error, userInfo } = userLogin;
 
-  const redirect = location ? (location.search ? location.search.split('=')[1] : '/') : '/';
+  const location = useLocation();
+
+  const redirect = location.search ? location.search.split('=')[1] : '/';
 
   useEffect(() => {
     if (userInfo) {
