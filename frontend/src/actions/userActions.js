@@ -48,6 +48,8 @@ export const register = (name, email, password) => async dispatch => {
     const { data } = await axios.post('http://localhost:5000/api/users', { name, email, password }, config);
 
     dispatch(userRegisterSucces(data));
+
+    // By dispatching userLoginSucces() we also set the state of the userLogin state
     dispatch(userLoginSucces(data));
 
     localStorage.setItem('userInfo', JSON.stringify(data));
