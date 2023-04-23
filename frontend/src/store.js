@@ -6,6 +6,7 @@ import productsReducer from './slices/productSlice';
 import { productSlice } from './slices/productSlice';
 import cartSliceReducer from './slices/cartSlice';
 import userSliceReducer from './slices/userSlice';
+import { userRegisterReducer } from './slices/userSlice';
 
 // Retrieve the cartItems array from the browser's localStorage API.
 // The localStorage.getItem method is used to retrieve the serialized version of the array.
@@ -31,6 +32,7 @@ const store = configureStore({
     product: productSlice.reducer,
     cart: cartSliceReducer,
     userLogin: userSliceReducer,
+    userRegister: userRegisterReducer.reducer,
   },
   preloadedState: initialState,
 });
