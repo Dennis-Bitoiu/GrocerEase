@@ -19,6 +19,8 @@ function ShippingScreen() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // On form submit, dispatch the saveShippingAddress action, which stores the
+  // Shipping address into the local storage and into the cart redux state
   function submitHandler(event) {
     event.preventDefault();
     dispatch(saveShippingAddress({ address, city, postalCode, country }));
