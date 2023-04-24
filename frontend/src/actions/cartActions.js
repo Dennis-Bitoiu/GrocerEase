@@ -2,6 +2,7 @@ import {
   addItem,
   removeItem,
   cartSaveShippingAddress,
+  cartSavePaymentMethod,
 } from '../slices/cartSlice';
 import axios from 'axios';
 
@@ -38,4 +39,10 @@ export const saveShippingAddress = data => async dispatch => {
   dispatch(cartSaveShippingAddress(data));
 
   localStorage.setItem('shippingAddress', JSON.stringify(data));
+};
+
+export const savePaymentMethod = method => async dispatch => {
+  dispatch(cartSavePaymentMethod(method));
+
+  localStorage.setItem('paymentMethod', JSON.stringify(method));
 };
