@@ -35,7 +35,7 @@ main {
 .card {
   height: 100%;
   font-size: 1rem;
-  box-shadow: 0 0 10px rgba(128, 128, 128, 0.3);
+  box-shadow: 0 0 10px rgba(128, 128, 128, 0.1);
 }
 
 .card-body {
@@ -105,3 +105,8 @@ main {
   padding: 0 9rem;
 }
 
+
+/* Place Order Screen Stylling */
+.order-summary-card {
+  height: auto;
+}
