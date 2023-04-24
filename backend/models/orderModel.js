@@ -10,17 +10,15 @@ const orderSchema = new mongoose.Schema(
     },
     orderItems: [
       {
-        name: {
-          type: String,
+        name: { type: String, required: true },
+        qty: { type: Number, required: true },
+        image: { type: String, required: true },
+        price: { type: Number, required: true },
+        // id in this case represents the id of a product
+        id: {
+          type: mongoose.Schema.Types.ObjectId,
           required: true,
-          quantity: Number,
-          image: String,
-          price: Number,
-          product: {
-            type: mongoose.Schema.Types.ObjectId,
-            required: true,
-            ref: 'Product',
-          },
+          ref: 'Product',
         },
       },
     ],
@@ -34,6 +32,10 @@ const orderSchema = new mongoose.Schema(
         required: true,
       },
       postalCode: {
+        type: String,
+        required: true,
+      },
+      country: {
         type: String,
         required: true,
       },
