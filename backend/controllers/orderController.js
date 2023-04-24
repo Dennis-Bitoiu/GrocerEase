@@ -9,12 +9,18 @@ import Order from '../models/orderModel.js';
 // @route: POST /api/orders
 // @access: Procate (Only logged in users can access it)
 const addOrderItems = AsyncHandler(async (req, res) => {
-  const { orderItems, shippingAddress, paymentMethod, itemsPrice } = req.body;
+  const {
+    orderItems,
+    shippingAddress,
+    paymentMethod,
+    itemsPrice,
+    deliveryFee,
+    total,
+  } = req.body;
 
   if (orderItems && orderItems.length === 0) {
     res.status(400);
     throw new Error('No order items');
-    return;
   } else {
     const order = new Order({
       orderItems,
@@ -22,7 +28,8 @@ const addOrderItems = AsyncHandler(async (req, res) => {
 
       shippingAddress,
       paymentMethod,
-      itemsPrice,
+      totalPrice: total,
+      deliveryPrice: deliveryFee,
     });
 
     const createdOrder = await order.save();
