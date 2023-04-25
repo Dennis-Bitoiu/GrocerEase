@@ -22,16 +22,10 @@ function OrderScreen() {
 
   const orderPay = useSelector(state => state.orderPay);
   const { loading: loadingPay, success: successPay } = orderPay;
-
   useEffect(() => {
     //  Async Function to add the SDK script to the body of the HTML
 
     const addPayPalScript = async () => {
-      // Fetch the clientId from /api/config/paypal
-      const { data: clientId } = await axios.get(
-        'http://localhost:5000/api/config/paypal'
-      );
-
       const script = document.createElement('script');
       script.type = 'text/javascript';
       script.src = `https://www.paypal.com/sdk/js?client-id=sb`;
