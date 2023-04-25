@@ -23,7 +23,7 @@ const orderCreate = createSlice({
 const orderDetails = createSlice({
   name: 'orderDetails',
   initialState: {
-    order: {},
+    order: null,
     orderItems: [],
     loading: true,
     error: null,
@@ -60,7 +60,7 @@ const orderPay = createSlice({
       state.error = action.payload;
     },
     orderPayReset: state => {
-      state.order = {};
+      state.order = null;
     },
   },
 });
