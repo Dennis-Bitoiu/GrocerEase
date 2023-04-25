@@ -11,7 +11,10 @@ import {
   userDetailsReducer,
   userUpdateProfileReducer,
 } from './slices/userSlice';
-import orderCreateReducer, { orderDetails } from './slices/orderSlice';
+import orderCreateReducer, {
+  orderDetails,
+  orderPay,
+} from './slices/orderSlice';
 
 // Retrieve the cartItems array from the browser's localStorage API.
 // The localStorage.getItem method is used to retrieve the serialized version of the array.
@@ -51,6 +54,7 @@ const store = configureStore({
     userUpdateProfile: userUpdateProfileReducer.reducer,
     orderCreate: orderCreateReducer,
     orderDetails: orderDetails.reducer,
+    orderPay: orderPay.reducer,
   },
   preloadedState: initialState,
 });
