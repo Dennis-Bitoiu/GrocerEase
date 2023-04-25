@@ -99,6 +99,7 @@ export const payOrder =
         },
       };
 
+      // PaymentResult will be sent in the req.body object
       const { data } = await axios.put(
         `http://localhost:5000/api/orders/${orderId}/pay`,
         paymentResult,
