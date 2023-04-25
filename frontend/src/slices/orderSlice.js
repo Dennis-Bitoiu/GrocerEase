@@ -23,9 +23,9 @@ const orderCreate = createSlice({
 const orderDetails = createSlice({
   name: 'orderDetails',
   initialState: {
+    order: {},
     orderItems: [],
-    shippingAddress: {},
-    loading: false,
+    loading: true,
     error: null,
   },
   reducers: {
@@ -34,7 +34,8 @@ const orderDetails = createSlice({
     },
     orderDetailsSuccess: (state, action) => {
       state.loading = false;
-      state.orderItems = action.payload;
+      state.order = action.payload;
+      state.orderItems = state.order.orderItems;
     },
     orderDetailsFail: (state, action) => {
       state.loading = false;
@@ -48,6 +49,6 @@ export const { orderCreateRequest, orderCreateSuccess, orderCreateFail } =
 export default orderCreate.reducer;
 
 export const { orderDetailsRequest, orderDetailsSuccess, orderDetailsFail } =
-  orderCreate.actions;
+  orderDetails.actions;
 
 export { orderDetails };
