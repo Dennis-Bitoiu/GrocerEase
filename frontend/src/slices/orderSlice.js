@@ -20,6 +20,34 @@ const orderCreate = createSlice({
   },
 });
 
+const orderDetails = createSlice({
+  name: 'orderDetails',
+  initialState: {
+    orderItems: [],
+    shippingAddress: {},
+    loading: false,
+    error: null,
+  },
+  reducers: {
+    orderDetailsRequest: state => {
+      state.loading = true;
+    },
+    orderDetailsSuccess: (state, action) => {
+      state.loading = false;
+      state.orderItems = action.payload;
+    },
+    orderDetailsFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+  },
+});
+
 export const { orderCreateRequest, orderCreateSuccess, orderCreateFail } =
   orderCreate.actions;
 export default orderCreate.reducer;
+
+export const { orderDetailsRequest, orderDetailsSuccess, orderDetailsFail } =
+  orderCreate.actions;
+
+export { orderDetails };
