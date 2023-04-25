@@ -32,6 +32,13 @@ function OrderScreen() {
             <ListGroup.Item>
               <h2>Shipping</h2>
               <p>
+                <strong>Name: </strong> {order.user.name}
+              </p>
+              <p>
+                <strong>Email: </strong>
+                <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
+              </p>
+              <p>
                 <strong>Address:</strong>
                 {order.shippingAddress.address}, {order.shippingAddress.city}{' '}
                 {order.shippingAddress.postalCode},{' '}
@@ -41,8 +48,16 @@ function OrderScreen() {
 
             <ListGroup.Item>
               <h2>Payment Method</h2>
-              <strong>Method: </strong>
-              {order.paymentMethod}
+              <p>
+                <strong>Method: </strong>
+                {order.paymentMethod}
+              </p>
+
+              {order.isPaid ? (
+                <Message variant='success'>Paid</Message>
+              ) : (
+                <Message variant='danger'>Not Paid</Message>
+              )}
             </ListGroup.Item>
 
             <ListGroup.Item>
@@ -108,6 +123,14 @@ function OrderScreen() {
                 <Row>
                   <Col>Delivery Fee:</Col>
                   <Col>€{order.deliveryPrice}</Col>
+                </Row>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <Row>
+                  <Col>Status:</Col>
+                  <Col>
+                    {order.isDelivered ? 'Delivered' : 'Waiting For Delivery'}
+                  </Col>
                 </Row>
               </ListGroup.Item>
 
