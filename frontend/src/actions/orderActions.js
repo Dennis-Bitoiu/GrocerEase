@@ -6,6 +6,10 @@ import {
   orderDetailsRequest,
   orderDetailsSuccess,
   orderDetailsFail,
+  orderPayRequest,
+  orderPaySuccess,
+  orderPayFail,
+  orderPayReset,
 } from '../slices/orderSlice';
 
 export const createOrder = order => async (dispatch, getState) => {
@@ -76,3 +80,38 @@ export const getOrderDetails = id => async (dispatch, getState) => {
     );
   }
 };
+
+export const payOrder =
+  (orderId, paymentResult) => async (dispatch, getState) => {
+    try {
+      dispatch(orderPayRequest());
+
+      // Retrieve the userInfo object from the 'userLogin' state
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          // Pass token through the authorization header
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await axios.put(
+        `http://localhost:5000/api/orders/${orderId}/pay`,
+        paymentResult,
+        config
+      );
+
+      dispatch(orderPaySuccess(data));
+    } catch (error) {
+      const customMessage = error.response.data.message;
+      dispatch(
+        orderPayFail(
+          error.response && customMessage ? customMessage : error.message
+        )
+      );
+    }
+  };
