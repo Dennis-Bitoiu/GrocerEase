@@ -7,7 +7,7 @@ import Order from '../models/orderModel.js';
 
 // @description: Create new order
 // @route: POST /api/orders
-// @access: Procate (Only logged in users can access it)
+// @access: Private (Only logged in users can access it)
 const addOrderItems = AsyncHandler(async (req, res) => {
   const {
     orderItems,
@@ -37,4 +37,21 @@ const addOrderItems = AsyncHandler(async (req, res) => {
   }
 });
 
-export { addOrderItems };
+// @description: Get order by id
+// @route: GET /api/orders/:id
+// @access: Private (Only logged in users can access it)
+const getOrderById = AsyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id).populate(
+    'user',
+    'name email '
+  );
+
+  if (order) {
+    res.json(order);
+  } else {
+    res.status(404);
+    throw new Error('Order not found!');
+  }
+});
+
+export { addOrderItems, getOrderById };
