@@ -39,6 +39,7 @@ const userRegisterReducer = createSlice({
   },
 });
 
+// Get the details of an user reducer
 const userDetailsReducer = createSlice({
   name: 'userRegister',
   initialState: { user: {}, loading: false, error: null },
@@ -62,6 +63,7 @@ const userDetailsReducer = createSlice({
   },
 });
 
+// Update profile reducer
 const userUpdateProfileReducer = createSlice({
   name: 'userUpdateProfile',
   initialState: { userInfo: {}, loading: false, error: null, success: false },
@@ -81,6 +83,28 @@ const userUpdateProfileReducer = createSlice({
     },
     userUpdateProfileReset: (state, action) => {
       state.loading = false;
+    },
+  },
+});
+
+// Get all the users reducer
+// Only for admins;
+
+const usersListReducer = createSlice({
+  name: 'usersListReducer',
+  initialState: { users: [], loading: false, error: null },
+  reducers: {
+    usersListRequest: state => {
+      state = { ...state };
+      state.loading = true;
+    },
+    usersListSucces: (state, action) => {
+      state.users = action.payload;
+      state.loading = false;
+    },
+    usersListFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
     },
   },
 });
@@ -108,3 +132,7 @@ export const {
   userUpdateProfileReset,
 } = userUpdateProfileReducer.actions;
 export { userUpdateProfileReducer };
+
+export const { usersListRequest, usersListSucces, usersListFail } =
+  usersListReducer.actions;
+export { usersListReducer };
