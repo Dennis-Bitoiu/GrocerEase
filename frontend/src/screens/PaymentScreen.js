@@ -27,7 +27,6 @@ function PaymentScreen() {
     navigate('/placeorder');
   }
 
-  console.log(paymentMethod);
   return (
     <FormContainer>
       <CheckoutSteps step1 step2 step3 />
