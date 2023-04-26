@@ -17,6 +17,7 @@ import {
   usersListRequest,
   usersListSucces,
   usersListFail,
+  usersListReset,
 } from '../slices/userSlice';
 import { orderListMyReset } from '../slices/orderSlice';
 import { cartReset } from '../slices/cartSlice';
@@ -54,6 +55,7 @@ export const logout = () => async dispatch => {
   dispatch(userDetailsReset());
   dispatch(orderListMyReset());
   dispatch(cartReset());
+  dispatch(usersListReset());
 };
 
 // Register Action

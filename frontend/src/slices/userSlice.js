@@ -106,6 +106,9 @@ const usersListReducer = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    usersListReset: state => {
+      state.users = [];
+    },
   },
 });
 
@@ -133,6 +136,10 @@ export const {
 } = userUpdateProfileReducer.actions;
 export { userUpdateProfileReducer };
 
-export const { usersListRequest, usersListSucces, usersListFail } =
-  usersListReducer.actions;
+export const {
+  usersListRequest,
+  usersListSucces,
+  usersListFail,
+  usersListReset,
+} = usersListReducer.actions;
 export { usersListReducer };
