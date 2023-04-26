@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
@@ -32,7 +32,6 @@ function PlaceOrderScreen() {
     // eslint-disable-next-line
   }, [navigate, success]);
 
-  console.log(cart.shippingAddress);
   function placeOrderHandler() {
     dispatch(
       createOrder({
