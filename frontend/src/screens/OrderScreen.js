@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { PayPalButton } from 'react-paypal-button-v2';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
@@ -43,7 +42,6 @@ function OrderScreen() {
     if (!order || successPay) {
       // If any of the conditions is true, dispatch orderPayReset() to set the state of the order to null;
       dispatch(orderPayReset());
-
       // Then dispatch getOrderDetails to retrieve the details of the order
       dispatch(getOrderDetails(orderId));
     } else if (!order.isPaid) {
