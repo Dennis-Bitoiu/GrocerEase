@@ -117,4 +117,13 @@ const registerUser = AsyncHandler(async (req, res) => {
   }
 });
 
-export { authUser, getUserProfile, updateUserProfile, registerUser };
+// @description: Get all users
+// @route: GET /api/users
+// @access: Private/Admin (only a logged in user with a privillege of admin can access it)
+const getUsers = AsyncHandler(async (req, res) => {
+  // req.user property was set in the authMiddleware.js
+  const users = await User.find({});
+  res.json(users);
+});
+
+export { authUser, getUserProfile, updateUserProfile, registerUser, getUsers };
