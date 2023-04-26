@@ -30,6 +30,8 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 });
 
+// Middleware to check if user making the request is an admin
+// If the user is not and admin, it returns a 401 Unauthorized error.
 const admin = (req, res, next) => {
   if (req.user && req.user.isAdmin) {
     next();
