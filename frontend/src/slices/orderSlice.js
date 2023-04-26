@@ -68,6 +68,24 @@ const orderPay = createSlice({
   },
 });
 
+const myOrdersReducer = createSlice({
+  name: 'myOrdersReducer',
+  initialState: { orders: [], loading: false, error: null },
+  reducers: {
+    orderListMyRequest: state => {
+      state.loading = true;
+    },
+    orderListMySuccess: (state, action) => {
+      state.loading = false;
+      state.orders = action.payload;
+    },
+    orderListMyFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+  },
+});
+
 export const { orderCreateRequest, orderCreateSuccess, orderCreateFail } =
   orderCreate.actions;
 export default orderCreate.reducer;
