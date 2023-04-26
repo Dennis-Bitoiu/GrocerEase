@@ -10,10 +10,13 @@ import {
   userDetailsRequest,
   userDetailsSucces,
   userDetailsFail,
+  userDetailsReset,
   userUpdateProfileRequest,
   userUpdateProfileSucces,
   userUpdateProfileFail,
 } from '../slices/userSlice';
+import { orderListMyReset } from '../slices/orderSlice';
+import { cartReset } from '../slices/cartSlice';
 
 export const login = (email, password) => async dispatch => {
   try {
@@ -24,19 +27,30 @@ export const login = (email, password) => async dispatch => {
       },
     };
 
-    const { data } = await axios.post('http://localhost:5000/api/users/login', { email, password }, config);
+    const { data } = await axios.post(
+      'http://localhost:5000/api/users/login',
+      { email, password },
+      config
+    );
     dispatch(userLoginSucces(data));
 
     localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
     const customMessage = error.response.data.message;
-    dispatch(userLoginFail(error.response && customMessage ? customMessage : error.message));
+    dispatch(
+      userLoginFail(
+        error.response && customMessage ? customMessage : error.message
+      )
+    );
   }
 };
 
 export const logout = () => async dispatch => {
   localStorage.removeItem('userInfo');
   dispatch(userLogout());
+  dispatch(userDetailsReset());
+  dispatch(orderListMyReset());
+  dispatch(cartReset());
 };
 
 // Register Action
@@ -51,7 +65,11 @@ export const register = (name, email, password) => async dispatch => {
       },
     };
 
-    const { data } = await axios.post('http://localhost:5000/api/users', { name, email, password }, config);
+    const { data } = await axios.post(
+      'http://localhost:5000/api/users',
+      { name, email, password },
+      config
+    );
 
     dispatch(userRegisterSucces(data));
 
@@ -61,7 +79,11 @@ export const register = (name, email, password) => async dispatch => {
     localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
     const customMessage = error.response.data.message;
-    dispatch(userRegisterFail(error.response && customMessage ? customMessage : error.message));
+    dispatch(
+      userRegisterFail(
+        error.response && customMessage ? customMessage : error.message
+      )
+    );
   }
 };
 
@@ -82,12 +104,19 @@ export const getUserDetails = id => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`http://localhost:5000/api/users/${id}`, config);
+    const { data } = await axios.get(
+      `http://localhost:5000/api/users/${id}`,
+      config
+    );
 
     dispatch(userDetailsSucces(data));
   } catch (error) {
     const customMessage = error.response.data.message;
-    dispatch(userDetailsFail(error.response && customMessage ? customMessage : error.message));
+    dispatch(
+      userDetailsFail(
+        error.response && customMessage ? customMessage : error.message
+      )
+    );
   }
 };
 
@@ -108,11 +137,19 @@ export const updateUserProfile = user => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.put(`http://localhost:5000/api/users/profile`, user, config);
+    const { data } = await axios.put(
+      `http://localhost:5000/api/users/profile`,
+      user,
+      config
+    );
 
     dispatch(userUpdateProfileSucces(data));
   } catch (error) {
     const customMessage = error.response.data.message;
-    dispatch(userUpdateProfileFail(error.response && customMessage ? customMessage : error.message));
+    dispatch(
+      userUpdateProfileFail(
+        error.response && customMessage ? customMessage : error.message
+      )
+    );
   }
 };
