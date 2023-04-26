@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { getOrderDetails, payOrder } from '../actions/orderActions';
-import { orderPayReset } from '../slices/orderSlice';
+import { orderPayReset, resetOrderCreate } from '../slices/orderSlice';
 
 function OrderScreen() {
   const dispatch = useDispatch();
@@ -37,11 +37,12 @@ function OrderScreen() {
 
       document.body.appendChild(script);
     };
-
     // Check if there is an 'order' object or if the 'successPay' variable is truthy
-    if (!order || successPay) {
-      // If any of the conditions is true, dispatch orderPayReset() to set the state of the order to null;
+    // Or if an order exist, check if its id is different from the one passed in the URL
+    if (!order || successPay || order._id !== orderId) {
+      // If any of the conditions is true, dispatch orderPayReset() to reset the success status of the payment to false;;
       dispatch(orderPayReset());
+      dispatch(resetOrderCreate());
       // Then dispatch getOrderDetails to retrieve the details of the order
       dispatch(getOrderDetails(orderId));
     } else if (!order.isPaid) {
@@ -59,8 +60,6 @@ function OrderScreen() {
 
   // Call this method when a payment was made succesfully
   function succesPaymentHandler(paymentResult) {
-    console.log(paymentResult);
-
     // dispatch the payOrder action, which makes a PUT request, updating the order with id == orderId
     dispatch(payOrder(orderId, paymentResult));
   }

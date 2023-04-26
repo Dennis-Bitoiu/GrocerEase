@@ -55,6 +55,10 @@ const userDetailsReducer = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    userDetailsReset: state => {
+      state.loading = false;
+      state.user = {};
+    },
   },
 });
 
@@ -89,8 +93,12 @@ export const { userRegisterRequest, userRegisterSucces, userRegisterFail } =
   userRegisterReducer.actions;
 export { userRegisterReducer };
 
-export const { userDetailsRequest, userDetailsSucces, userDetailsFail } =
-  userDetailsReducer.actions;
+export const {
+  userDetailsRequest,
+  userDetailsSucces,
+  userDetailsFail,
+  userDetailsReset,
+} = userDetailsReducer.actions;
 export { userDetailsReducer };
 
 export const {
