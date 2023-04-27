@@ -112,6 +112,24 @@ const usersListReducer = createSlice({
   },
 });
 
+const userDelete = createSlice({
+  name: 'userDelete',
+  initialState: { loading: false, success: false, error: null },
+  reducers: {
+    userDeleteRequest: state => {
+      state.loading = true;
+    },
+    userDeleteSucces: (state, action) => {
+      state.loading = false;
+      state.success = true;
+    },
+    userDeleteFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+  },
+});
+
 export const { userLoginRequest, userLoginSucces, userLoginFail, userLogout } =
   userSlice.actions;
 export default userSlice.reducer;
@@ -143,3 +161,7 @@ export const {
   usersListReset,
 } = usersListReducer.actions;
 export { usersListReducer };
+
+export const { userDeleteRequest, userDeleteSucces, userDeleteFail } =
+  userDelete.actions;
+export { userDelete };
