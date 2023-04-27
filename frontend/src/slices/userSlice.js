@@ -119,13 +119,35 @@ const userDelete = createSlice({
     userDeleteRequest: state => {
       state.loading = true;
     },
-    userDeleteSucces: (state, action) => {
+    userDeleteSucces: state => {
       state.loading = false;
       state.success = true;
     },
     userDeleteFail: (state, action) => {
       state.loading = false;
       state.error = action.payload;
+    },
+  },
+});
+
+// Reducer that allows admins to edit a user's profile
+const userUpdate = createSlice({
+  name: 'userDelete',
+  initialState: { user: null, loading: false, success: false, error: null },
+  reducers: {
+    userUpdateRequest: state => {
+      state.loading = true;
+    },
+    userUpdateSucces: state => {
+      state.loading = false;
+      state.success = true;
+    },
+    userUpdateFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    userUpdateReset: state => {
+      state.success = false;
     },
   },
 });
@@ -165,3 +187,11 @@ export { usersListReducer };
 export const { userDeleteRequest, userDeleteSucces, userDeleteFail } =
   userDelete.actions;
 export { userDelete };
+
+export const {
+  userUpdateRequest,
+  userUpdateSucces,
+  userUpdateFail,
+  userUpdateReset,
+} = userUpdate.actions;
+export { userUpdate };
