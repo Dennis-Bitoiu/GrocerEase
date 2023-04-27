@@ -167,7 +167,7 @@ const updateUser = AsyncHandler(async (req, res) => {
     // Otherwise the current value of the user property is preserved.
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
-    user.isAdmin = req.body.isAdmin || user.isAdmin;
+    user.isAdmin = req.body.isAdmin;
 
     // Update (save) the user in the data base and return the saved object
     const updatedUser = await user.save();
