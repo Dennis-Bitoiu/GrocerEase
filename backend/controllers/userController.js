@@ -141,6 +141,45 @@ const deleteUser = AsyncHandler(async (req, res) => {
   }
 });
 
+// @description: Get a user by its ID
+// @route: GET /api/users/:id
+// @access: Private/Admin (only a logged in user with a privillege of admin can access it)
+const getUserById = AsyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id).select('-password');
+
+  if (user) {
+    res.json(user);
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+});
+
+// @description: Update user
+// @route: put /api/users/:id
+// @access: Private/Admin (only a logged in user with a privillege of admin can access it)
+const updateUser = AsyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+  console.log(user);
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    user.isAdmin = req.body.isAdmin || user.isAdmin;
+
+    const updatedUser = await user.save();
+
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+    });
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+});
+
 export {
   authUser,
   getUserProfile,
@@ -148,4 +187,6 @@ export {
   registerUser,
   getUsers,
   deleteUser,
+  getUserById,
+  updateUser,
 };
