@@ -12,6 +12,7 @@ import {
   userUpdateProfileReducer,
   usersListReducer,
   userDelete,
+  userUpdate,
 } from './slices/userSlice';
 import orderCreateReducer, {
   orderDetails,
@@ -57,6 +58,7 @@ const store = configureStore({
     userUpdateProfile: userUpdateProfileReducer.reducer,
     usersListReducer: usersListReducer.reducer,
     userDelete: userDelete.reducer,
+    userUpdate: userUpdate.reducer,
     orderCreate: orderCreateReducer,
     orderDetails: orderDetails.reducer,
     orderPay: orderPay.reducer,
