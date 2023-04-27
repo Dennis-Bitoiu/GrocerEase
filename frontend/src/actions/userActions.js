@@ -18,6 +18,9 @@ import {
   usersListSucces,
   usersListFail,
   usersListReset,
+  userDeleteRequest,
+  userDeleteSucces,
+  userDeleteFail,
 } from '../slices/userSlice';
 import { orderListMyReset } from '../slices/orderSlice';
 import { cartReset } from '../slices/cartSlice';
@@ -183,6 +186,39 @@ export const listUsers = () => async (dispatch, getState) => {
     const customMessage = error.response.data.message;
     dispatch(
       usersListFail(
+        error.response && customMessage ? customMessage : error.message
+      )
+    );
+  }
+};
+
+export const deleteUser = id => async (dispatch, getState) => {
+  try {
+    dispatch(userDeleteRequest());
+
+    // Retrieve the userInfo object from the 'userLogin' state
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        // Pass token through the authorization header
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.delete(
+      `http://localhost:5000/api/users/${id}`,
+      config
+    );
+
+    dispatch(userDeleteSucces());
+  } catch (error) {
+    const customMessage = error.response.data.message;
+    dispatch(
+      userDeleteFail(
         error.response && customMessage ? customMessage : error.message
       )
     );
