@@ -121,9 +121,33 @@ const registerUser = AsyncHandler(async (req, res) => {
 // @route: GET /api/users
 // @access: Private/Admin (only a logged in user with a privillege of admin can access it)
 const getUsers = AsyncHandler(async (req, res) => {
-  // req.user property was set in the authMiddleware.js
   const users = await User.find({});
   res.json(users);
 });
 
-export { authUser, getUserProfile, updateUserProfile, registerUser, getUsers };
+// @description: Delete an user whoose id equals req.params.id
+// @route: DELETE /api/users/:id
+// @access: Private/Admin (only a logged in user with a privillege of admin can access it)
+const deleteUser = AsyncHandler(async (req, res) => {
+  // req.user property was set in the authMiddleware.js
+  const user = await User.findById(req.params.id);
+
+  if (user) {
+    await User.deleteOne({ _id: req.params.id });
+    res.json('User removed');
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+
+  res.json(users);
+});
+
+export {
+  authUser,
+  getUserProfile,
+  updateUserProfile,
+  registerUser,
+  getUsers,
+  deleteUser,
+};

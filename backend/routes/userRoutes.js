@@ -2,6 +2,7 @@ import express from 'express';
 const router = express.Router();
 import {
   authUser,
+  deleteUser,
   getUserProfile,
   getUsers,
   registerUser,
@@ -20,5 +21,6 @@ router
   .put(protect, updateUserProfile);
 
 router.route('/').post(registerUser);
+router.route('/:id').delete(protect, admin, deleteUser);
 
 export default router;
