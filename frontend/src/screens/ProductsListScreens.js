@@ -18,6 +18,7 @@ function ProductsListScreen() {
   const { userInfo } = userLogin;
 
   useEffect(() => {
+    // Render the page only if a user is logged in and if that user is an admin
     if (userInfo && userInfo.isAdmin) {
       dispatch(fetchProducts());
     } else {
