@@ -5,13 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import FormContainer from '../components/FormContainer';
-import { register } from '../actions/userActions';
-import { getUserDetails } from '../actions/userActions';
+import { getUserDetails, updateUser } from '../actions/userActions';
+import { userUpdateReset } from '../slices/userSlice';
 
 function UserEditScreen() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const params = useParams();
-  const location = useLocation();
 
   const userId = params.id;
   const [name, setName] = useState('');
@@ -19,26 +19,46 @@ function UserEditScreen() {
   const [isAdmin, setIsAdmin] = useState(false);
 
   // Retrieve the user reducer and destructure the loading, error and userInfo
-  const dispatch = useDispatch();
   const userDetails = useSelector(state => state.userDetails);
   const { loading, error, user } = userDetails;
 
+  const userUpdate = useSelector(state => state.userUpdate);
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = userUpdate;
+
   useEffect(() => {
-    if (!user.name || user._id !== userId) {
-      // If a user doesn't exist (normally would happen on the first load of the page),
-      // Or the user.id is different from the id parameter in the URL (would happen when trying to access the route multiple times)
-      // Dispatch the getUserDetails action
-      dispatch(getUserDetails(userId));
+    if (successUpdate) {
+      dispatch(userUpdateReset());
+      navigate('/admin/userslist');
     } else {
-      // If a user exists, update the state of the name, email and isAdmin
-      setName(user.name);
-      setEmail(user.email);
-      setIsAdmin(user.isAdmin);
+      if (!user.name || user._id !== userId) {
+        // If a user doesn't exist (normally would happen on the first load of the page),
+        // Or the user.id is different from the id parameter in the URL (would happen when trying to access the route multiple times)
+        // Dispatch the getUserDetails action
+        dispatch(getUserDetails(userId));
+      } else {
+        // If a user exists, update the state of the name, email and isAdmin
+        setName(user.name);
+        setEmail(user.email);
+        setIsAdmin(user.isAdmin);
+      }
     }
-  }, [user, dispatch]);
+  }, [user, dispatch, successUpdate, navigate, userId]);
 
   function submitHandler(event) {
     event.preventDefault();
+
+    dispatch(
+      updateUser({
+        _id: userId,
+        name,
+        email,
+        isAdmin,
+      })
+    );
   }
 
   return (
@@ -49,6 +69,8 @@ function UserEditScreen() {
 
       <FormContainer>
         <h1>Edit User</h1>
+        {loadingUpdate && <Loader />}
+        {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
         {loading ? (
           <Loader />
         ) : error ? (
