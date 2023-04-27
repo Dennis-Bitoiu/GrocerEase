@@ -21,6 +21,9 @@ import {
   userDeleteRequest,
   userDeleteSucces,
   userDeleteFail,
+  userUpdateRequest,
+  userUpdateSucces,
+  userUpdateFail,
 } from '../slices/userSlice';
 import { orderListMyReset } from '../slices/orderSlice';
 import { cartReset } from '../slices/cartSlice';
@@ -173,7 +176,6 @@ export const listUsers = () => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        'Content-Type': 'application/json',
         // Pass token through the authorization header
         Authorization: `Bearer ${userInfo.token}`,
       },
@@ -216,6 +218,44 @@ export const deleteUser = id => async (dispatch, getState) => {
     const customMessage = error.response.data.message;
     dispatch(
       userDeleteFail(
+        error.response && customMessage ? customMessage : error.message
+      )
+    );
+  }
+};
+
+export const updateUser = user => async (dispatch, getState) => {
+  try {
+    dispatch(userUpdateRequest());
+
+    // Retrieve the userInfo object from the 'userLogin' state
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        // Pass token through the authorization header
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(
+      `http://localhost:5000/api/users/${user._id}`,
+      user,
+      config
+    );
+
+    dispatch(userUpdateSucces(data));
+
+    // After the update is complete, update the user details on the page.
+    // This is done by dispatching userDetailsSuccess and passing in as parameter the data that comes back from the api
+    dispatch(userDetailsSucces(data));
+  } catch (error) {
+    const customMessage = error.response.data.message;
+    dispatch(
+      userUpdateFail(
         error.response && customMessage ? customMessage : error.message
       )
     );
