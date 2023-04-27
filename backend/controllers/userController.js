@@ -160,14 +160,19 @@ const getUserById = AsyncHandler(async (req, res) => {
 // @access: Private/Admin (only a logged in user with a privillege of admin can access it)
 const updateUser = AsyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
-  console.log(user);
+
   if (user) {
+    // Check if the request body includes a new value for each of the user's name, email, and isAdmin properties.
+    // If req.body does include a new value, assign it to the corresponding user property.
+    // Otherwise the current value of the user property is preserved.
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
     user.isAdmin = req.body.isAdmin || user.isAdmin;
 
+    // Update (save) the user in the data base and return the saved object
     const updatedUser = await user.save();
 
+    // Respond with the new updated user's details
     res.json({
       _id: updatedUser._id,
       name: updatedUser.name,
