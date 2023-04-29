@@ -64,6 +64,29 @@ const removeProduct = createSlice({
   },
 });
 
+const productCreate = createSlice({
+  name: 'removeProduct',
+  initialState: { product: {}, loading: false, error: null, success: false },
+  reducers: {
+    productCreateRequest: state => {
+      state.loading = true;
+    },
+    productCreateSuccess: (state, action) => {
+      state.success = true;
+      state.loading = false;
+      state.product = action.payload;
+    },
+    productCreateFail: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    },
+    productCreateReset: state => {
+      state.success = false;
+      state.product = null;
+    },
+  },
+});
+
 // Actions that will be executed in the productsAction.js fil
 export const { productListRequest, productListSucces, productListFail } =
   productsSlice.actions;
@@ -77,3 +100,12 @@ export { productSlice };
 export const { productRemoveRequest, productRemoveSuccess, productRemoveFail } =
   removeProduct.actions;
 export { removeProduct };
+
+export const {
+  productCreateRequest,
+  productCreateSuccess,
+  productCreateFail,
+  productCreateReset,
+} = productCreate.actions;
+
+export { productCreate };

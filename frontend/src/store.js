@@ -3,7 +3,11 @@
 // import { composeWithDevTools } from 'redux-devtools-extension';
 import { configureStore } from '@reduxjs/toolkit';
 import productsReducer from './slices/productSlice';
-import { productSlice, removeProduct } from './slices/productSlice';
+import {
+  productSlice,
+  removeProduct,
+  productCreate,
+} from './slices/productSlice';
 import cartSliceReducer from './slices/cartSlice';
 import userSliceReducer from './slices/userSlice';
 import {
@@ -52,6 +56,7 @@ const store = configureStore({
     productsList: productsReducer,
     product: productSlice.reducer,
     removeProduct: removeProduct.reducer,
+    productCreate: productCreate.reducer,
     cart: cartSliceReducer,
     userLogin: userSliceReducer,
     userRegister: userRegisterReducer.reducer,
