@@ -5,7 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { fetchProducts } from '../actions/productsActions';
+import { fetchProducts, deleteProduct } from '../actions/productsActions';
 
 function ProductsListScreen() {
   const dispatch = useDispatch();
@@ -17,6 +17,13 @@ function ProductsListScreen() {
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
 
+  const removeProduct = useSelector(state => state.removeProduct);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = removeProduct;
+
   useEffect(() => {
     // Render the page only if a user is logged in and if that user is an admin
     if (userInfo && userInfo.isAdmin) {
@@ -24,11 +31,11 @@ function ProductsListScreen() {
     } else {
       navigate('/login');
     }
-  }, [dispatch, navigate, userInfo]);
+  }, [dispatch, navigate, userInfo, successDelete]);
 
   function deleteHandler(id) {
     if (window.confirm('Are you sure')) {
-      // delete products
+      dispatch(deleteProduct(id));
     }
   }
 
@@ -48,6 +55,8 @@ function ProductsListScreen() {
           </Button>
         </Col>
       </Row>
+      {loadingDelete && <Loader />}
+      {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
       {loading ? (
         <Loader />
       ) : error ? (
