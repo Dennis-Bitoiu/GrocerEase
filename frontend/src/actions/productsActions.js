@@ -15,6 +15,9 @@ import {
   productRequest,
   productSuccess,
   productFail,
+  productRemoveRequest,
+  productRemoveSuccess,
+  productRemoveFail,
 } from '../slices/productSlice';
 
 export const fetchProducts = () => async dispatch => {
@@ -44,6 +47,36 @@ export const fetchProduct = id => async dispatch => {
     const customMessage = error.response.data.message;
     dispatch(
       productFail(
+        error.response && customMessage ? customMessage : error.message
+      )
+    );
+  }
+};
+
+export const deleteProduct = id => async (dispatch, getState) => {
+  try {
+    dispatch(productRemoveRequest());
+
+    // Retrieve the userInfo object from the 'userLogin' state
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        // Pass token through the authorization header
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    // PaymentResult will be sent in the req.body object
+    await axios.delete(`http://localhost:5000/api/products/${id}`, config);
+
+    dispatch(productRemoveSuccess());
+  } catch (error) {
+    const customMessage = error.response.data.message;
+    dispatch(
+      productRemoveFail(
         error.response && customMessage ? customMessage : error.message
       )
     );
