@@ -118,36 +118,35 @@ export const payOrder =
     }
   };
 
-export const listMyOrders =
-  (orderId, paymentResult) => async (dispatch, getState) => {
-    try {
-      dispatch(orderListMyRequest);
+export const listMyOrders = () => async (dispatch, getState) => {
+  try {
+    dispatch(orderListMyRequest());
 
-      // Retrieve the userInfo object from the 'userLogin' state
-      const {
-        userLogin: { userInfo },
-      } = getState();
+    // Retrieve the userInfo object from the 'userLogin' state
+    const {
+      userLogin: { userInfo },
+    } = getState();
 
-      const config = {
-        headers: {
-          // Pass token through the authorization header
-          Authorization: `Bearer ${userInfo.token}`,
-        },
-      };
+    const config = {
+      headers: {
+        // Pass token through the authorization header
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
 
-      // PaymentResult will be sent in the req.body object
-      const { data } = await axios.get(
-        `http://localhost:5000/api/orders/myorders`,
-        config
-      );
+    // PaymentResult will be sent in the req.body object
+    const { data } = await axios.get(
+      `http://localhost:5000/api/orders/myorders`,
+      config
+    );
 
-      dispatch(orderListMySuccess(data));
-    } catch (error) {
-      const customMessage = error.response.data.message;
-      dispatch(
-        orderListMyFail(
-          error.response && customMessage ? customMessage : error.message
-        )
-      );
-    }
-  };
+    dispatch(orderListMySuccess(data));
+  } catch (error) {
+    const customMessage = error.response.data.message;
+    dispatch(
+      orderListMyFail(
+        error.response && customMessage ? customMessage : error.message
+      )
+    );
+  }
+};
