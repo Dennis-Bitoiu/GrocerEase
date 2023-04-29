@@ -76,7 +76,9 @@ function ProfileScreen() {
     <Row>
       <Col md={3}>
         <h2>User Profile</h2>
-        {message && <Message variant='danger'>{message}</Message>}
+        {message && orders.length !== 0 ? (
+          <Message variant='danger'>{message}</Message>
+        ) : null}
         {success && <Message variant='success'>Profile Updated</Message>}
         {error && <Message variant='danger'>{error}</Message>}
         {loading && <Loader />}
