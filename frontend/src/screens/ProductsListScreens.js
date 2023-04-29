@@ -5,7 +5,12 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { fetchProducts, deleteProduct } from '../actions/productsActions';
+import {
+  fetchProducts,
+  deleteProduct,
+  createProduct,
+} from '../actions/productsActions';
+import { productCreateReset } from '../slices/productSlice';
 
 function ProductsListScreen() {
   const dispatch = useDispatch();
@@ -24,14 +29,34 @@ function ProductsListScreen() {
     success: successDelete,
   } = removeProduct;
 
+  const productCreate = useSelector(state => state.productCreate);
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+    product: createdProduct,
+  } = productCreate;
+
   useEffect(() => {
+    dispatch(productCreateReset());
     // Render the page only if a user is logged in and if that user is an admin
-    if (userInfo && userInfo.isAdmin) {
-      dispatch(fetchProducts());
-    } else {
+    if (!userInfo.isAdmin) {
       navigate('/login');
     }
-  }, [dispatch, navigate, userInfo, successDelete]);
+
+    if (successCreate) {
+      navigate(`/admin/product/${createdProduct._id}/edit`);
+    } else {
+      dispatch(fetchProducts());
+    }
+  }, [
+    dispatch,
+    navigate,
+    userInfo,
+    successDelete,
+    successCreate,
+    createdProduct,
+  ]);
 
   function deleteHandler(id) {
     if (window.confirm('Are you sure')) {
@@ -40,7 +65,7 @@ function ProductsListScreen() {
   }
 
   function createProductHandler() {
-    console.log('Created');
+    dispatch(createProduct());
   }
 
   return (
@@ -57,6 +82,9 @@ function ProductsListScreen() {
       </Row>
       {loadingDelete && <Loader />}
       {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
+
+      {loadingCreate && <Loader />}
+      {errorCreate && <Message variant='danger'>{errorCreate}</Message>}
       {loading ? (
         <Loader />
       ) : error ? (
