@@ -18,6 +18,9 @@ import {
   productRemoveRequest,
   productRemoveSuccess,
   productRemoveFail,
+  productCreateRequest,
+  productCreateSuccess,
+  productCreateFail,
 } from '../slices/productSlice';
 
 export const fetchProducts = () => async dispatch => {
@@ -77,6 +80,41 @@ export const deleteProduct = id => async (dispatch, getState) => {
     const customMessage = error.response.data.message;
     dispatch(
       productRemoveFail(
+        error.response && customMessage ? customMessage : error.message
+      )
+    );
+  }
+};
+
+export const createProduct = () => async (dispatch, getState) => {
+  try {
+    dispatch(productCreateRequest());
+
+    // Retrieve the userInfo object from the 'userLogin' state
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        // Pass token through the authorization header
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    // Passed empty object as second parameter since this is a post request
+    // The object is created by the createProduct controller
+    const { data } = await axios.post(
+      `http://localhost:5000/api/products`,
+      {},
+      config
+    );
+
+    dispatch(productCreateSuccess(data));
+  } catch (error) {
+    const customMessage = error.response.data.message;
+    dispatch(
+      productCreateFail(
         error.response && customMessage ? customMessage : error.message
       )
     );
