@@ -86,7 +86,7 @@ const myOrdersReducer = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
-    orderListMyReset: (state, action) => {
+    orderListMyReset: state => {
       state.loading = false;
       state.orders = [];
     },
