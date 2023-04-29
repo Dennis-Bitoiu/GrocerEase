@@ -30,4 +30,23 @@ const getProductById = AsyncHandler(async (req, res) => {
   }
 });
 
-export { getProducts, getProductById };
+// @description: Delete a product
+// @route: DELETE /api/products/:id
+// @access: Private / Admin (User has to be an admin to access this route)
+const deleteProduct = AsyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const product = await Product.findById(id);
+
+  if (product) {
+    await Product.deleteOne({ _id: product._id });
+    res.json({ message: 'Product removed' });
+  } else {
+    // If something happened. set the sstatus of the response to 404 and throw an error
+    // Which will be caught by the errorHandler handler
+    console.log('Not Valid');
+    res.status(404);
+    throw new Error('Product not found');
+  }
+});
+
+export { getProducts, getProductById, deleteProduct };
