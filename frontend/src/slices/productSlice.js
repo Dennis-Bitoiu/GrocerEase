@@ -87,6 +87,28 @@ const productCreate = createSlice({
   },
 });
 
+const productUpdate = createSlice({
+  name: 'productUpdate',
+  initialState: { product: null, loading: false, error: null },
+  reducers: {
+    productUpdateRequest: state => {
+      state.loading = true;
+    },
+    productUpdateSuccess: (state, action) => {
+      state.success = true;
+      state.loading = false;
+      state.product = action.payload;
+    },
+    productUpdateFail: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    },
+    productUpdateReset: state => {
+      state.product = null;
+    },
+  },
+});
+
 // Actions that will be executed in the productsAction.js fil
 export const { productListRequest, productListSucces, productListFail } =
   productsSlice.actions;
@@ -109,3 +131,12 @@ export const {
 } = productCreate.actions;
 
 export { productCreate };
+
+export const {
+  productUpdateRequest,
+  productUpdateSuccess,
+  productUpdateFail,
+  productUpdateReset,
+} = productUpdate.actions;
+
+export { productUpdate };
