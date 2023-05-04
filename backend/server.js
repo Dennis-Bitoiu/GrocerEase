@@ -3,6 +3,7 @@
 // IMPORTANT: When importing files, they need to end in .extension (.js)
 // This also allows to export files using ES6 modules: export default <name>
 import express from 'express';
+import path from 'path';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import colors from 'colors';
@@ -11,6 +12,7 @@ import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import productRoutes from './routes/productRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
+import uploadRoutes from './routes/orderRoutes.js';
 
 dotenv.config();
 
@@ -29,9 +31,14 @@ app.get('/', (req, res) => {
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/upload', uploadRoutes);
+
+// Define the absolute path of the current directory
+const __dirname = path.resolve();
+// Serve static files from the '/uploads' directory using Express middleware
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 // ERROR HANDLER MIDDLEWARES
-
 // notFound will throw an error that will be caught and managed by errorHandler
 app.use(notFound);
 
