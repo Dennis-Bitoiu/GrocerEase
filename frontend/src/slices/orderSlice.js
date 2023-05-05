@@ -71,6 +71,27 @@ const orderPay = createSlice({
   },
 });
 
+const orderDeliver = createSlice({
+  name: 'orderDeliver',
+  initialState: { loading: false, success: false, error: null },
+  reducers: {
+    orderDeliverRequest: state => {
+      state.loading = true;
+    },
+    orderDeliverSuccess: state => {
+      state.loading = false;
+      state.success = true;
+    },
+    orderDeliverFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    orderDeliverReset: state => {
+      state.success = false;
+    },
+  },
+});
+
 const myOrdersReducer = createSlice({
   name: 'myOrdersReducer',
   initialState: { orders: [], loading: false, error: null },
@@ -130,6 +151,14 @@ export { orderDetails };
 export const { orderPayRequest, orderPaySuccess, orderPayFail, orderPayReset } =
   orderPay.actions;
 export { orderPay };
+
+export const {
+  orderDeliverRequest,
+  orderDeliverSuccess,
+  orderDeliverFail,
+  orderDeliverReset,
+} = orderDeliver.actions;
+export { orderDeliver };
 
 export const {
   orderListMyRequest,
