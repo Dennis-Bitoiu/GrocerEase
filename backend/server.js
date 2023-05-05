@@ -38,7 +38,7 @@ app.use('/api/upload', uploadRoutes);
 const __dirname = path.resolve();
 console.log(path.join(__dirname, 'uploads'));
 // Serve static files from the '/uploads' directory using Express middleware
-app.use(express.static(path.join(__dirname, 'uploads')));
+app.use(express.static(path.join(__dirname, '/uploads')));
 
 // ERROR HANDLER MIDDLEWARES
 // notFound will throw an error that will be caught and managed by errorHandler
