@@ -11,7 +11,10 @@ const storage = multer.diskStorage({
   filename(req, file, cb) {
     // Format the name of the file
     // path.extname() extracts the extension of the original filename
-    cb(null, `${file.fieldname}-${Date.now}${path.extname(file.originalname)}`);
+    cb(
+      null,
+      `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`
+    );
   },
 });
 
@@ -43,6 +46,7 @@ const upload = multer({
 // Route handler for single file uploads using Multer middleware
 // Returns the file path as the response
 router.post('/', upload.single('image'), (req, res) => {
+  console.log(req.file);
   res.send(`/${req.file.path}`);
 });
 

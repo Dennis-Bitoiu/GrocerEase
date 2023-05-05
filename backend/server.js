@@ -12,7 +12,7 @@ import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import productRoutes from './routes/productRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
-import uploadRoutes from './routes/orderRoutes.js';
+import uploadRoutes from './routes/uploadRoutes.js';
 
 dotenv.config();
 
@@ -36,8 +36,9 @@ app.use('/api/upload', uploadRoutes);
 // Define the absolute path of the current directory
 // The built in __dirname can't be used with ES modules
 const __dirname = path.resolve();
+console.log(path.join(__dirname, 'uploads'));
 // Serve static files from the '/uploads' directory using Express middleware
-app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
+app.use(express.static(path.join(__dirname, 'uploads')));
 
 // ERROR HANDLER MIDDLEWARES
 // notFound will throw an error that will be caught and managed by errorHandler

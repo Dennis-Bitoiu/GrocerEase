@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,6 +22,8 @@ function ProductEditScreen() {
   const [category, setCategory] = useState('');
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState('');
+
+  const [uploading, setUploading] = useState(false);
 
   // Retrieve the user reducer and destructure the loading, error and userInfo
   const productDetails = useSelector(state => state.product);
@@ -69,6 +72,31 @@ function ProductEditScreen() {
     );
   }
 
+  async function uploadFileHandler(event) {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append('image', file);
+    setUploading(true);
+
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      };
+      const { data } = await axios.post(
+        'http://localhost:5000/api/upload',
+        formData,
+        config
+      );
+
+      setImage(data);
+      setUploading(false);
+    } catch (error) {
+      console.error(error);
+      setUploading(false);
+    }
+  }
   return (
     <>
       <Link to='/admin/productslist' className='btn btn-light my-3'>
@@ -86,7 +114,7 @@ function ProductEditScreen() {
           <Message variant='danger'>{error}</Message>
         ) : (
           <Form onSubmit={submitHandler}>
-            <Form.Group controlId='name'>
+            <Form.Group id='name'>
               <Form.Label>Name</Form.Label>
               <Form.Control
                 type='text'
@@ -96,7 +124,7 @@ function ProductEditScreen() {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId='price'>
+            <Form.Group id='price'>
               <Form.Label>Price</Form.Label>
               <Form.Control
                 type='number'
@@ -106,7 +134,7 @@ function ProductEditScreen() {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId='image'>
+            <Form.Group id='image'>
               <Form.Label>Image</Form.Label>
               <Form.Control
                 type='text'
@@ -114,9 +142,16 @@ function ProductEditScreen() {
                 value={image}
                 onChange={e => setImage(e.target.value)}
               ></Form.Control>
+              <Form.Control
+                type='file'
+                id='image-file'
+                label='Choose file'
+                onChange={uploadFileHandler}
+              ></Form.Control>
+              {uploading ? <Loader /> : null}
             </Form.Group>
 
-            <Form.Group controlId='brand'>
+            <Form.Group id='brand'>
               <Form.Label>Brand</Form.Label>
               <Form.Control
                 type='text'
@@ -126,7 +161,7 @@ function ProductEditScreen() {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId='category'>
+            <Form.Group id='category'>
               <Form.Label>Category</Form.Label>
               <Form.Control
                 type='text'
@@ -136,7 +171,7 @@ function ProductEditScreen() {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId='countInStock'>
+            <Form.Group id='countInStock'>
               <Form.Label>Count In Stock</Form.Label>
               <Form.Control
                 type='number'
@@ -146,7 +181,7 @@ function ProductEditScreen() {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId='description'>
+            <Form.Group id='description'>
               <Form.Label>Description</Form.Label>
               <Form.Control
                 type='text'
