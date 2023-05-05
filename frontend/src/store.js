@@ -23,6 +23,7 @@ import orderCreateReducer, {
   orderDetails,
   orderPay,
   myOrdersReducer,
+  ordersList,
 } from './slices/orderSlice';
 
 // Retrieve the cartItems array from the browser's localStorage API.
@@ -71,6 +72,7 @@ const store = configureStore({
     orderDetails: orderDetails.reducer,
     orderPay: orderPay.reducer,
     myOrdersReducer: myOrdersReducer.reducer,
+    ordersList: ordersList.reducer,
   },
   preloadedState: initialState,
 });
