@@ -93,6 +93,24 @@ const myOrdersReducer = createSlice({
   },
 });
 
+const ordersList = createSlice({
+  name: 'ordersList',
+  initialState: { orders: [], loading: false, error: null },
+  reducers: {
+    ordersListRequest: state => {
+      state.loading = true;
+    },
+    ordersListSuccess: (state, action) => {
+      state.loading = false;
+      state.orders = action.payload;
+    },
+    ordersListFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+  },
+});
+
 export const {
   orderCreateRequest,
   orderCreateSuccess,
@@ -120,3 +138,7 @@ export const {
   orderListMyReset,
 } = myOrdersReducer.actions;
 export { myOrdersReducer };
+
+export const { ordersListRequest, ordersListSuccess, ordersListFail } =
+  ordersList.actions;
+export { ordersList };
