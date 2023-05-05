@@ -36,7 +36,6 @@ app.use('/api/upload', uploadRoutes);
 // Define the absolute path of the current directory
 // The built in __dirname can't be used with ES modules
 const __dirname = path.resolve();
-console.log(path.join(__dirname, 'uploads'));
 // Serve static files from the '/uploads' directory using Express middleware
 app.use(express.static(path.join(__dirname, '/uploads')));
 
