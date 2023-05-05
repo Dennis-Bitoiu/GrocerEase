@@ -1,15 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { PayPalButton } from 'react-paypal-button-v2';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { getOrderDetails, payOrder } from '../actions/orderActions';
-import { orderPayReset, resetOrderCreate } from '../slices/orderSlice';
+import {
+  getOrderDetails,
+  payOrder,
+  deliverOrder,
+} from '../actions/orderActions';
+import {
+  orderPayReset,
+  resetOrderCreate,
+  orderDeliverReset,
+} from '../slices/orderSlice';
 
 function OrderScreen() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const paramsObject = useParams();
   const orderId = paramsObject.id;
 
@@ -19,9 +28,20 @@ function OrderScreen() {
   const orderDetails = useSelector(state => state.orderDetails);
   const { order, orderItems, loading, error } = orderDetails;
 
+  const orderDeliver = useSelector(state => state.orderDeliver);
+  const { loading: loadingDeliver, success: successDeliver } = orderDeliver;
+
   const orderPay = useSelector(state => state.orderPay);
   const { loading: loadingPay, success: successPay } = orderPay;
+
+  const userLogin = useSelector(state => state.userLogin);
+  const { userInfo } = userLogin;
   useEffect(() => {
+    // Redirect if a user that is not logged in tries to access this page
+    if (!userInfo) {
+      navigate('/login');
+    }
+
     //  Async Function to add the SDK script to the body of the HTML
 
     const addPayPalScript = async () => {
@@ -39,10 +59,11 @@ function OrderScreen() {
     };
     // Check if there is an 'order' object or if the 'successPay' variable is truthy
     // Or if an order exist, check if its id is different from the one passed in the URL
-    if (!order || successPay || order._id !== orderId) {
+    if (!order || successPay || order._id !== orderId || successDeliver) {
       // If any of the conditions is true, dispatch orderPayReset() to reset the success status of the payment to false;;
       dispatch(orderPayReset());
       dispatch(resetOrderCreate());
+      dispatch(orderDeliverReset());
       // Then dispatch getOrderDetails to retrieve the details of the order
       dispatch(getOrderDetails(orderId));
     } else if (!order.isPaid) {
@@ -56,12 +77,24 @@ function OrderScreen() {
         setSdkReady(true);
       }
     }
-  }, [dispatch, orderId, order, successPay]);
+  }, [
+    dispatch,
+    orderId,
+    order,
+    successPay,
+    successDeliver,
+    userInfo,
+    navigate,
+  ]);
 
   // Call this method when a payment was made succesfully
   function succesPaymentHandler(paymentResult) {
     // dispatch the payOrder action, which makes a PUT request, updating the order with id == orderId
     dispatch(payOrder(orderId, paymentResult));
+  }
+
+  function deliverHandler() {
+    dispatch(deliverOrder(order));
   }
 
   return loading ? (
@@ -91,7 +124,9 @@ function OrderScreen() {
               </p>
 
               {order.isDelivered ? (
-                <Message variant='success'>Delivered</Message>
+                <Message variant='success'>
+                  Delivered on {order.deliveredAt}
+                </Message>
               ) : (
                 <Message variant='danger'>Not Delivered</Message>
               )}
@@ -154,7 +189,6 @@ function OrderScreen() {
               <ListGroup.Item>
                 <h2>Order Summary</h2>
               </ListGroup.Item>
-
               <ListGroup.Item>
                 <Row>
                   <Col>Products Price:</Col>
@@ -169,7 +203,6 @@ function OrderScreen() {
                   </Col>
                 </Row>
               </ListGroup.Item>
-
               <ListGroup.Item>
                 <Row>
                   <Col>Delivery Fee:</Col>
@@ -184,7 +217,6 @@ function OrderScreen() {
                   </Col>
                 </Row>
               </ListGroup.Item>
-
               <ListGroup.Item>
                 <Row>
                   <Col>
@@ -195,7 +227,6 @@ function OrderScreen() {
                   </Col>
                 </Row>
               </ListGroup.Item>
-
               {!order.isPaid && (
                 <ListGroup.Item>
                   {loadingPay && <Loader />}{' '}
@@ -209,6 +240,24 @@ function OrderScreen() {
                   )}
                 </ListGroup.Item>
               )}
+
+              {/* Render the 'Mark as Delivered' button only if a user is logged
+             In and if it is an admin user */}
+              {loadingDeliver && <Loader />}
+              {userInfo &&
+                userInfo.isAdmin &&
+                order.isPaid &&
+                !order.isDelivered && (
+                  <ListGroup.Item>
+                    <Button
+                      type='button'
+                      className='btn btn-block'
+                      onClick={deliverHandler}
+                    >
+                      Mark As Delivered
+                    </Button>
+                  </ListGroup.Item>
+                )}
             </ListGroup>
           </Card>
         </Col>
