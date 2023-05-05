@@ -22,6 +22,7 @@ import {
 import orderCreateReducer, {
   orderDetails,
   orderPay,
+  orderDeliver,
   myOrdersReducer,
   ordersList,
 } from './slices/orderSlice';
@@ -71,6 +72,7 @@ const store = configureStore({
     orderCreate: orderCreateReducer,
     orderDetails: orderDetails.reducer,
     orderPay: orderPay.reducer,
+    orderDeliver: orderDeliver.reducer,
     myOrdersReducer: myOrdersReducer.reducer,
     ordersList: ordersList.reducer,
   },
