@@ -25,10 +25,6 @@ function OrdersListScreen() {
     }
   }, [dispatch, navigate, userInfo]);
 
-  function deleteHandler(id) {
-    console.log(id);
-  }
-
   console.log(orders);
   return (
     <>
@@ -76,7 +72,7 @@ function OrdersListScreen() {
                   )}
                 </td>
                 <td>
-                  <LinkContainer to={`/admin/orders/${order._id}`}>
+                  <LinkContainer to={`/order/${order._id}`}>
                     <Button variant='dark' className='btn-sm'>
                       Details
                     </Button>
