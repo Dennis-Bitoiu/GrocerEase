@@ -12,6 +12,9 @@ import {
   orderListMyRequest,
   orderListMySuccess,
   orderListMyFail,
+  ordersListRequest,
+  ordersListSuccess,
+  ordersListFail,
 } from '../slices/orderSlice';
 
 export const createOrder = order => async (dispatch, getState) => {
@@ -145,6 +148,39 @@ export const listMyOrders = () => async (dispatch, getState) => {
     const customMessage = error.response.data.message;
     dispatch(
       orderListMyFail(
+        error.response && customMessage ? customMessage : error.message
+      )
+    );
+  }
+};
+
+export const listAllOrders = () => async (dispatch, getState) => {
+  try {
+    dispatch(ordersListRequest());
+
+    // Retrieve the userInfo object from the 'userLogin' state
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        // Pass token through the authorization header
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    // PaymentResult will be sent in the req.body object
+    const { data } = await axios.get(
+      `http://localhost:5000/api/orders`,
+      config
+    );
+
+    dispatch(ordersListSuccess(data));
+  } catch (error) {
+    const customMessage = error.response.data.message;
+    dispatch(
+      ordersListFail(
         error.response && customMessage ? customMessage : error.message
       )
     );
