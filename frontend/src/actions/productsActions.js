@@ -26,21 +26,27 @@ import {
   productUpdateFail,
 } from '../slices/productSlice';
 
-export const fetchProducts = () => async dispatch => {
-  dispatch(productListRequest());
-  try {
-    const response = await axios.get('http://localhost:5000/api/products');
+// Use keyword as a query in case users search for a product
+// Set it as default to an empty string (used for the home page)
+export const fetchProducts =
+  (keyword = '') =>
+  async dispatch => {
+    dispatch(productListRequest());
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/products?keyword=${keyword}`
+      );
 
-    dispatch(productListSucces(response.data));
-  } catch (error) {
-    const customMessage = error.response.data.message;
-    dispatch(
-      productListFail(
-        error.response && customMessage ? customMessage : error.message
-      )
-    );
-  }
-};
+      dispatch(productListSucces(response.data));
+    } catch (error) {
+      const customMessage = error.response.data.message;
+      dispatch(
+        productListFail(
+          error.response && customMessage ? customMessage : error.message
+        )
+      );
+    }
+  };
 
 export const fetchProduct = id => async dispatch => {
   dispatch(productRequest());
