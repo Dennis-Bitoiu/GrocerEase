@@ -22,6 +22,7 @@ const HomeScreen = () => {
   // To prevent the "useEffect" hook from causing an infinite loop.
   // Get products from the reducer and store them into the 'productsList' state
   useEffect(() => {
+    // Use the keyword for fetching products that were searched in the search bar
     dispatch(fetchProducts(keyword));
   }, [dispatch, keyword]);
 
