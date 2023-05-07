@@ -9,7 +9,20 @@ import Product from '../models/productModel.js';
 // @route: GET /api/products
 // @access: Public (Anyone can access it)
 const getProducts = AsyncHandler(async (req, res) => {
-  const products = await Product.find({});
+  // Retrieve the query string
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          // Use a regex to search for any pattern of letters corresponding to the keyword
+          $regex: req.query.keyword,
+          // Set options to 'i' for case insensitive
+          $options: 'i',
+        },
+      }
+    : {};
+
+  // Spread the keyword object to use it as a query for the field 'name'
+  const products = await Product.find({ ...keyword });
   res.json(products);
 });
 
