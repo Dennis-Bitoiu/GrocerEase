@@ -90,6 +90,8 @@ function ProductEditScreen() {
         config
       );
 
+      // Prefix the image of the URL with the API address.
+      // This ensures that the image URL is usable by the client
       setImage(`http://localhost:5000${data}`);
       setUploading(false);
     } catch (error) {
