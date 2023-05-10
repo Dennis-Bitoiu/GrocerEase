@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Container } from 'react-bootstrap';
 import Product from '../components/Product';
 import { fetchProducts } from '../actions/productsActions';
 import Loader from '../components/Loader';
@@ -30,7 +30,7 @@ const HomeScreen = () => {
   const { products, loading, error } = producstList;
 
   return (
-    <>
+    <Container fluid className='px-5'>
       <Categories></Categories>
       <h1>Latest products</h1>
       {loading ? (
@@ -53,7 +53,7 @@ const HomeScreen = () => {
           ))}
         </Row>
       )}
-    </>
+    </Container>
   );
 };
 

@@ -1,30 +1,48 @@
-import React from "react";
-import Carousel from "react-bootstrap/Carousel";
-import ItemMenu from "./ItemMenu";
+import React from 'react';
+import Carousel from 'react-bootstrap/Carousel';
+import ItemMenu from './ItemMenu';
+import Container from 'react-bootstrap/Container';
 
 function Categories() {
   return (
-    <Carousel variant="dark" indicators={false}>
-      <Carousel.Item>
-        <ItemMenu></ItemMenu>
-        <ItemMenu></ItemMenu>
-        <ItemMenu></ItemMenu>
-        <ItemMenu></ItemMenu>
-        <ItemMenu></ItemMenu>
-        <ItemMenu></ItemMenu>
-        <ItemMenu></ItemMenu>
-      </Carousel.Item>
+    <Container fluid>
+      <h1 className='mb-2'>Categories</h1>
+      <Carousel variant='dark' indicators={false} interval={null}>
+        <Carousel.Item>
+          <ItemMenu></ItemMenu>
+          <ItemMenu></ItemMenu>
+          <ItemMenu></ItemMenu>
+          <ItemMenu></ItemMenu>
+          <ItemMenu></ItemMenu>
+          <ItemMenu></ItemMenu>
+          <ItemMenu></ItemMenu>
+          <ItemMenu></ItemMenu>
+          <ItemMenu></ItemMenu>
+          <ItemMenu></ItemMenu>
+          <ItemMenu></ItemMenu>
+          <ItemMenu></ItemMenu>
+          <ItemMenu></ItemMenu>
+          <ItemMenu></ItemMenu>
+        </Carousel.Item>
 
-      <Carousel.Item>
-        <ItemMenu></ItemMenu>
-        <ItemMenu></ItemMenu>
-        <ItemMenu></ItemMenu>
-        <ItemMenu></ItemMenu>
-        <ItemMenu></ItemMenu>
-        <ItemMenu></ItemMenu>
-        <ItemMenu></ItemMenu>
-      </Carousel.Item>
-    </Carousel>
+        <Carousel.Item>
+          <ItemMenu></ItemMenu>
+          <ItemMenu></ItemMenu>
+          <ItemMenu></ItemMenu>
+          <ItemMenu></ItemMenu>
+          <ItemMenu></ItemMenu>
+          <ItemMenu></ItemMenu>
+          <ItemMenu></ItemMenu>
+          <ItemMenu></ItemMenu>
+          <ItemMenu></ItemMenu>
+          <ItemMenu></ItemMenu>
+          <ItemMenu></ItemMenu>
+          <ItemMenu></ItemMenu>
+          <ItemMenu></ItemMenu>
+          <ItemMenu></ItemMenu>
+        </Carousel.Item>
+      </Carousel>
+    </Container>
   );
 }
 
