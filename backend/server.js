@@ -37,7 +37,7 @@ app.use('/api/upload', uploadRoutes);
 // The built in __dirname can't be used with ES modules
 const __dirname = path.resolve();
 // Serve static files from the '/uploads' directory using Express middleware
-app.use(express.static(path.join(__dirname, '/uploads')));
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 // ERROR HANDLER MIDDLEWARES
 // notFound will throw an error that will be caught and managed by errorHandler
