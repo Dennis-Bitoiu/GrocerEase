@@ -22,11 +22,9 @@ function Categories() {
           <ItemMenu></ItemMenu>
           <ItemMenu></ItemMenu>
           <ItemMenu></ItemMenu>
-          <ItemMenu></ItemMenu>
         </Carousel.Item>
 
         <Carousel.Item>
-          <ItemMenu></ItemMenu>
           <ItemMenu></ItemMenu>
           <ItemMenu></ItemMenu>
           <ItemMenu></ItemMenu>
