@@ -90,7 +90,7 @@ function ProductEditScreen() {
         config
       );
 
-      setImage(data);
+      setImage(`http://localhost:5000${data}`);
       setUploading(false);
     } catch (error) {
       console.error(error);
