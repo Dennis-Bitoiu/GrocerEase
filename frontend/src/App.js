@@ -26,7 +26,7 @@ const App = () => {
     <Router>
       <Header />
       <main>
-        <Container>
+        <Container fluid>
           <Routes>
             <Route exact path='/' element={<HomeScreen />} />
             <Route exact path='/search/:keyword' element={<HomeScreen />} />
